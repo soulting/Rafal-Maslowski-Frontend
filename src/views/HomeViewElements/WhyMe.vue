@@ -142,13 +142,6 @@ h2 {
   padding: 0 25px 0 25px;
 }
 
-/* .why-me-title {
-  text-align: left;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 50px 0 50px 100px;
-} */
-
 .why-me-large-view {
   display: none;
 }
