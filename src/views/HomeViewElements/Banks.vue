@@ -157,6 +157,7 @@ const goToBank = (bank_url) => {
   justify-content: center;
   align-items: center;
   margin: 25px 0 50px 0;
+  position: relative;
 }
 h2 {
   margin: 30px 0 30px 0;

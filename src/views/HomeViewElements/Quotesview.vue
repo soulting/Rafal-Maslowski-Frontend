@@ -45,6 +45,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-attachment: fixed;
 }
 
 @keyframes changeBackground {

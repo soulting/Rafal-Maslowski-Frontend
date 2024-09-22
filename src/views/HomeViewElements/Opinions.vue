@@ -1,7 +1,13 @@
 <template>
   <section class="opinions-section" id="opinion-element-observe-target">
+    <img
+      class="paralax-image"
+      id="paralax"
+      src="@/assets/backgrounds/hand-shake2.jpg"
+      alt=""
+    />
     <transition name="opinionElement">
-      <h2 v-show="showElement[0]">Co o mnie mówią moi klienci</h2>
+      <h2 v-show="showElement">Co o mnie mówią moi klienci</h2>
     </transition>
     <div class="opinions">
       <div
@@ -11,9 +17,9 @@
       >
         <transition name="opinionElement">
           <div
-            v-show="showElement[index + 1]"
+            v-show="showElement"
             class="inner-opinion-container"
-            :id="index"
+            :id="`element${index}`"
           >
             <p class="opinion-text">„{{ opinion.review }}”.</p>
             <p class="opinion-autor">{{ opinion.author }}</p>
@@ -45,22 +51,27 @@ const opinions = ref([
   },
 ]);
 
-const showElement = ref([false, false, false, false]);
+const showElement = ref(false);
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        for (let i = 0; i < 4; i++) {
-          setTimeout(() => {
-            showElement.value[i] = true;
-          }, i * 350);
-        }
+        showElement.value = true;
       }
     });
   });
   const target = document.getElementById(`opinion-element-observe-target`);
   observer.observe(target);
+
+  window.addEventListener("scroll", function () {
+    let scrollPosition = window.pageYOffset;
+
+    // Przesuwaj obraz tła wolniej
+    document.getElementById("paralax").style.transform = `translateY(${
+      scrollPosition * 0.3 - 500
+    }px)`;
+  });
 });
 </script>
 
@@ -68,11 +79,37 @@ onMounted(() => {
 .opinions-section {
   width: 100vw;
   padding: 0 0 30px 0;
-  background-color: rgb(250, 250, 250, 1);
-  background-image: url("@/assets/backgrounds/bohater.png");
+  background-color: rgb(250, 250, 250, 0.5);
+  /* background-image: url("@/assets/backgrounds/bohater3.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  position: relative;
+  background-attachment: fixed; */
+
+  overflow: hidden;
+  position: relative;
+}
+
+.paralax-image {
+  object-fit: cover;
+  width: 100%;
+  height: 150%;
+  position: absolute;
+  left: 0;
+
+  transform: translateY(100%);
+}
+
+.opinions-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 1;
 }
 
 .opinions {
@@ -84,6 +121,8 @@ onMounted(() => {
 
 h2 {
   margin: 30px 0 30px 0;
+  position: relative;
+  z-index: 2;
 }
 
 .inner-opinion-container {
@@ -93,6 +132,8 @@ h2 {
   border: solid black 0.5px;
   border-radius: 25px;
   background-color: rgb(255, 255, 255);
+  position: relative;
+  z-index: 2;
 }
 
 .opinion-text {
@@ -123,6 +164,16 @@ h2 {
   transition: all 1s ease;
 }
 
+#element0.opinionElement-enter-active {
+  transition-delay: 0.35s;
+}
+#element1.opinionElement-enter-active {
+  transition-delay: 0.7s;
+}
+#element2.opinionElement-enter-active {
+  transition-delay: 1.05s;
+}
+
 .opinionElement-enter-to,
 .opinionElement-leave-from {
   opacity: 1;
@@ -148,7 +199,7 @@ h2 {
     width: 650px;
   }
 
-  #\31 {
+  #element1 {
     margin-left: auto;
   }
 }
