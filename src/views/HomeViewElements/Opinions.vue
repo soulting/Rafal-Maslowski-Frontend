@@ -1,7 +1,7 @@
 <template>
   <section class="opinions-section" id="opinion-element-observe-target">
     <transition name="opinionElement">
-      <h2 v-if="showElement[0]">Co o mnie mówią moi klienci</h2>
+      <h2 v-show="showElement[0]">Co o mnie mówią moi klienci</h2>
     </transition>
     <div class="opinions">
       <div
@@ -10,7 +10,11 @@
         class="outer-opinion-containe"
       >
         <transition name="opinionElement">
-          <div v-if="showElement[index + 1]" class="inner-opinion-container">
+          <div
+            v-show="showElement[index + 1]"
+            class="inner-opinion-container"
+            :id="index"
+          >
             <p class="opinion-text">„{{ opinion.review }}”.</p>
             <p class="opinion-autor">{{ opinion.author }}</p>
           </div>
@@ -50,7 +54,7 @@ onMounted(() => {
         for (let i = 0; i < 4; i++) {
           setTimeout(() => {
             showElement.value[i] = true;
-          }, i * 250);
+          }, i * 350);
         }
       }
     });
@@ -63,7 +67,12 @@ onMounted(() => {
 <style scoped>
 .opinions-section {
   width: 100vw;
-  margin: 50px 0 50px 0;
+  padding: 0 0 30px 0;
+  background-color: rgb(250, 250, 250, 1);
+  background-image: url("@/assets/backgrounds/bohater.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .opinions {
@@ -74,7 +83,7 @@ onMounted(() => {
 }
 
 h2 {
-  margin-bottom: 50px;
+  margin: 30px 0 30px 0;
 }
 
 .inner-opinion-container {
@@ -83,6 +92,7 @@ h2 {
   font-style: italic;
   border: solid black 0.5px;
   border-radius: 25px;
+  background-color: rgb(255, 255, 255);
 }
 
 .opinion-text {
@@ -99,6 +109,7 @@ h2 {
 
 .outer-opinion-containe {
   padding: 0 15px 0 15px;
+  /* width: 100%; */
 }
 
 .opinionElement-enter-from,
@@ -116,5 +127,48 @@ h2 {
 .opinionElement-leave-from {
   opacity: 1;
   transform: translateY(0%);
+}
+
+@media (min-width: 768px) {
+  .opinions-section {
+    padding: 0 0 50px 0;
+  }
+
+  h2 {
+    margin: 40px 0 40px 0;
+  }
+  .opinions {
+    gap: 50px;
+  }
+  .outer-opinion-containe {
+    padding: 0 75px 0 75px;
+    box-sizing: border-box;
+  }
+  .inner-opinion-container {
+    width: 650px;
+  }
+
+  #\31 {
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 1100px) {
+  h2 {
+    margin: 50px 0 50px 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .opinions {
+    gap: 50px;
+  }
+  .outer-opinion-containe {
+    padding: 0 150px 0 150px;
+    box-sizing: border-box;
+  }
+  .inner-opinion-container {
+    width: 650px;
+  }
 }
 </style>

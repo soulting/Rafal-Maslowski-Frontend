@@ -98,7 +98,7 @@ onMounted(() => {
 
 <style scoped>
 .blog-element {
-  padding: 50px 0 50px 0;
+  padding: 25px 0 25px 0;
   background-color: rgb(250, 250, 250);
   width: 100vw;
   display: flex;
@@ -196,6 +196,10 @@ h2 {
 }
 
 @media (min-width: 768px) {
+  h2 {
+    margin: 25px;
+  }
+
   .posts-container {
     display: flex;
     align-items: center;
@@ -240,6 +244,9 @@ h2 {
 }
 
 @media (min-width: 1100px) {
+  h2 {
+    margin: 35px 0 35px 0;
+  }
   .posts-container {
     display: flex;
     align-items: center;

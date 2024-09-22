@@ -3,8 +3,8 @@
     <QuotesviewVue />
     <BlogElementVue />
     <WhyMe />
-    <Banki />
     <Options />
+    <Banks />
   </main>
 </template>
 
@@ -12,7 +12,7 @@
 import BlogElementVue from "./HomeViewElements/BlogElement.vue";
 import QuotesviewVue from "./HomeViewElements/Quotesview.vue";
 import WhyMe from "./HomeViewElements/WhyMe.vue";
-import Banki from "./HomeViewElements/Banki.vue";
+import Banks from "./HomeViewElements/Banks.vue";
 import Options from "./HomeViewElements/Opinions.vue";
 </script>
 
@@ -22,5 +22,6 @@ import Options from "./HomeViewElements/Opinions.vue";
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
 }
 </style>

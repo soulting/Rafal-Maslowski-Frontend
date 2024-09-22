@@ -5,29 +5,30 @@
         Dlaczego warto
       </h2></transition
     >
-
-    <carousel
-      class="carousel"
-      :items-to-show="1"
-      :wrap-around="true"
-      snapAlign="center"
-    >
-      <slide
-        v-for="(reasons, index) in reasonsText"
-        :key="index"
-        class="carousel-reasonss-container"
+    <transition name="whyMeElement">
+      <carousel
+        class="carousel"
+        v-if="showElement[0]"
+        :items-to-show="1"
+        :wrap-around="true"
+        snapAlign="center"
       >
-        <div class="carousel-item">
-          <div class="reasons-body">
-            <h4 class="reasons-title">{{ reasons.title }}</h4>
-            <p class="reasons-description">{{ reasons.text }}</p>
+        <slide
+          v-for="(reasons, index) in reasonsText"
+          :key="index"
+          class="carousel-reasonss-container"
+        >
+          <div class="carousel-item">
+            <div class="reasons-body">
+              <h4 class="reasons-title">{{ reasons.title }}</h4>
+              <p class="reasons-description">{{ reasons.text }}</p>
+            </div>
           </div>
-        </div>
-      </slide>
-      <template #addons>
-        <Pagination />
-      </template>
-    </carousel>
+        </slide>
+        <template #addons>
+          <Pagination />
+        </template> </carousel
+    ></transition>
 
     <div class="why-me-large-view">
       <div class="why-me-text-container">
@@ -75,7 +76,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
@@ -114,6 +115,7 @@ onMounted(() => {
       }
     });
   });
+
   const target = document.getElementById(`why-me-observe-target`);
   observer.observe(target);
 });
@@ -127,15 +129,20 @@ const changeMissionExplanationSelectedMarker = (marker) => {
 .why-me {
   display: flex;
   flex-direction: column;
-  margin: 100px 0 50px 0;
-  min-height: 250px;
+  margin: 30px 0 50px 0;
+  width: 100vw;
 }
 
 h2 {
-  margin: 25px 0 25px 0;
+  margin: 0 0 25px 0;
   pointer-events: none;
   width: 100%;
   text-align: center;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: column;
 }
 
 .carousel-item {
@@ -244,13 +251,13 @@ h2 {
 
 .missionExplanationFragment-enter-from {
   transform: translateY(100%);
-  /* transform: translateX(100%); */
+
   opacity: 0;
 }
 
 .missionExplanationFragment-enter-to {
   transform: translateY(0%);
-  /* transform: translateX(0%); */
+
   opacity: 1;
 }
 
@@ -294,8 +301,8 @@ h2 {
   transform: translateY(0%);
 }
 
-@media (min-width: 450px) {
-}
+/* @media (min-width: 450px) {
+} */
 
 @media (min-width: 768px) {
   h2 {
@@ -329,6 +336,9 @@ h2 {
 }
 
 @media (min-width: 1100px) {
+  h2 {
+    margin: 25px 0 35px 100px;
+  }
   .why-me-text {
     width: 750px;
   }

@@ -68,6 +68,8 @@ body::-webkit-scrollbar {
 }
 
 nav {
+  width: 100vw;
+  box-sizing: border-box;
   height: 70px;
   display: flex;
   align-items: flex-start;

@@ -58,7 +58,7 @@ onMounted(() => {
         for (let i = 0; i < 15; i++) {
           setTimeout(() => {
             showElement.value[i] = true;
-          }, i * 150);
+          }, i * 250);
         }
       }
     });
@@ -156,10 +156,10 @@ const goToBank = (bank_url) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px 0 100px 0;
+  margin: 25px 0 50px 0;
 }
 h2 {
-  margin: 25px 0 25px 0;
+  margin: 30px 0 30px 0;
 }
 
 .grid-container {
@@ -227,6 +227,9 @@ h2 {
 }
 
 @media (min-width: 768px) {
+  h2 {
+    margin: 40px;
+  }
   .grid-container {
     grid-template-columns: repeat(5, 155px);
     grid-template-rows: repeat(3, 145px);
@@ -269,6 +272,9 @@ h2 {
 }
 
 @media (min-width: 1100px) {
+  h2 {
+    margin: 50px;
+  }
   .grid-container {
     grid-template-columns: repeat(5, 175px);
     grid-template-rows: repeat(3, 160px);
