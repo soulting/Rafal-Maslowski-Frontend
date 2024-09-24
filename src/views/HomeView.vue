@@ -1,19 +1,21 @@
 <template>
   <main class="home-view">
-    <QuotesviewVue />
-    <BlogElementVue />
+    <Quote />
+    <BlogElement />
     <WhyMe />
     <Options />
     <Banks />
+    <Contact />
   </main>
 </template>
 
 <script setup>
-import BlogElementVue from "./HomeViewElements/BlogElement.vue";
-import QuotesviewVue from "./HomeViewElements/Quotesview.vue";
+import BlogElement from "./HomeViewElements/BlogElement.vue";
+import Quote from "./HomeViewElements/Quote.vue";
 import WhyMe from "./HomeViewElements/WhyMe.vue";
 import Banks from "./HomeViewElements/Banks.vue";
 import Options from "./HomeViewElements/Opinions.vue";
+import Contact from "./HomeViewElements/Contact.vue";
 </script>
 
 <style scoped>

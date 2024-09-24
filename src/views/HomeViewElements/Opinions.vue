@@ -7,7 +7,7 @@
       alt=""
     />
     <transition name="opinionElement">
-      <h2 v-show="showElement">Co o mnie mówią moi klienci</h2>
+      <h2 v-if="showElement">Co o mnie mówią moi klienci</h2>
     </transition>
     <div class="opinions">
       <div
@@ -17,7 +17,7 @@
       >
         <transition name="opinionElement">
           <div
-            v-show="showElement"
+            v-if="showElement"
             class="inner-opinion-container"
             :id="`element${index}`"
           >
@@ -67,7 +67,6 @@ onMounted(() => {
   window.addEventListener("scroll", function () {
     let scrollPosition = window.pageYOffset;
 
-    // Przesuwaj obraz tła wolniej
     document.getElementById("paralax").style.transform = `translateY(${
       scrollPosition * 0.3 - 500
     }px)`;
@@ -79,26 +78,18 @@ onMounted(() => {
 .opinions-section {
   width: 100vw;
   padding: 0 0 30px 0;
-  background-color: rgb(250, 250, 250, 0.5);
-  /* background-image: url("@/assets/backgrounds/bohater3.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  background-attachment: fixed; */
-
   overflow: hidden;
   position: relative;
+  min-height: 500px;
 }
 
 .paralax-image {
   object-fit: cover;
   width: 100%;
-  height: 150%;
+  height: 130%;
   position: absolute;
   left: 0;
-
-  transform: translateY(100%);
+  /* transform: translateY(100%); */
 }
 
 .opinions-section::after {
@@ -131,7 +122,7 @@ h2 {
   font-style: italic;
   border: solid black 0.5px;
   border-radius: 25px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255, 0.7);
   position: relative;
   z-index: 2;
 }

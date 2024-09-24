@@ -46,6 +46,11 @@
         </div>
       </slide>
     </carousel>
+    <transition name="blogElement">
+      <button v-if="showElement[3]" class="more-articles">
+        Więcej wpisów
+      </button></transition
+    >
   </section>
 </template>
 
@@ -77,16 +82,16 @@ const posts = ref({
   ],
 });
 
-const showElement = ref([false, false, false]);
+const showElement = ref([false, false, false, false]);
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
           setTimeout(() => {
             showElement.value[i] = true;
-          }, i * 150);
+          }, i * 250);
         }
       }
     });
@@ -164,6 +169,28 @@ h2 {
   padding-bottom: 10px;
   text-align: left;
   margin: 0 0 20px 0;
+}
+
+.more-articles {
+  font-size: 16px;
+  font-weight: 500;
+  height: 50px;
+  background-color: white;
+  border: solid black 0.5px;
+  border-radius: 25px;
+  padding: 0 15px 0 15px;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  text-align: center;
+  color: #2c3e50;
+  transition: all 1s ease;
+  margin-top: 30px;
+}
+
+.more-articles:hover {
+  font-size: 18px;
+  background-color: #2c3e50;
+  color: #ffffff;
 }
 
 .post-description {

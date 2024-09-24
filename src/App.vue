@@ -86,6 +86,7 @@ nav {
 
 .navbar-img {
   height: 100px;
+  position: relative;
 }
 
 .navbar-img-shadow {
@@ -94,13 +95,13 @@ nav {
   top: 0;
   left: 10px;
   filter: drop-shadow(0px 3px 4px rgb(0, 0, 0, 0.1));
+  z-index: 10;
 }
 
 .tab-container {
   display: none;
   align-items: center;
   height: 70px;
-  gap: 20px;
 }
 
 .tab-hamburger-menu {
@@ -156,12 +157,12 @@ nav {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  padding: 10px;
 }
 
 .router-link:hover {
   color: rgb(67, 149, 209);
   font-size: 17px;
-  padding: 0 10px;
 }
 
 .dropdown-tabs {
@@ -176,7 +177,7 @@ nav {
   flex-direction: column;
   align-items: center;
   position: fixed;
-  z-index: 1;
+  z-index: 9;
   /* box-shadow: 0px 10px 15px -8px rgb(81, 81, 81); */
 }
 
