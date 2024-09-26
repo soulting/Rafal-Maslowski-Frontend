@@ -89,7 +89,6 @@ onMounted(() => {
   height: 130%;
   position: absolute;
   left: 0;
-  /* transform: translateY(100%); */
 }
 
 .opinions-section::after {

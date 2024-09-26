@@ -6,7 +6,12 @@
       alt="contact background image"
       id="parallax"
     />
-
+    <transition name="errorElement">
+      <div v-if="showError" class="problem-message">
+        <h3>Wystąpił problem</h3>
+        <p>Proszę wypełnić wszystkie pola i podać poprawny email</p>
+      </div>
+    </transition>
     <div class="contact-details-container">
       <transition name="contactElement">
         <h2 v-if="showElement" id="element0">Skontaktuj się ze mną</h2>
@@ -15,7 +20,12 @@
         <transition name="contactElement">
           <div v-if="showElement" class="inner_input_container">
             <p>Imię</p>
-            <input v-model="message.name" class="name" type="text" /></div
+            <input
+              v-model="message.name"
+              class="name"
+              type="text"
+              required
+            /></div
         ></transition>
         <transition name="contactElement">
           <div v-if="showElement" class="inner_input_container" id="element2">
@@ -44,6 +54,8 @@ import { onMounted, ref } from "vue";
 
 const showElement = ref(false);
 
+const showError = ref(false);
+
 const message = ref({ name: "", email: "", messageText: "" });
 
 const sendMessage = () => {
@@ -61,6 +73,11 @@ const sendMessage = () => {
 
   if (isTheMessageCorrect.value) {
     console.log("send message");
+  } else {
+    showError.value = true;
+    setTimeout(() => {
+      showError.value = false;
+    }, 3500);
   }
 };
 
@@ -108,6 +125,15 @@ onMounted(() => {
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.5);
   z-index: -1;
+}
+
+.problem-message {
+  top: 30vh;
+  position: absolute;
+  background-color: rgb(255, 255, 255, 1);
+  border: solid black 0.5px;
+  padding: 0 25px 25px 25px;
+  z-index: 4;
 }
 
 .ontact-background-image {
@@ -204,6 +230,7 @@ onMounted(() => {
   min-width: 150px;
   z-index: 1;
   background: transparent;
+  cursor: pointer;
 }
 
 .send-button:hover {
@@ -242,7 +269,27 @@ onMounted(() => {
   transform: translateY(0%);
 }
 
+.errorElement-enter-from,
+.errorElement-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.errorElement-enter-active,
+.errorElement-leave-active {
+  transition: all 1s ease;
+}
+
+.errorElement-enter-to,
+.errorElement-leave-from {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
 @media (min-width: 768px) {
+  .problem-message {
+    top: 100px;
+  }
   .contact-details-container {
     width: 75%;
   }

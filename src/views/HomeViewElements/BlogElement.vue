@@ -4,25 +4,15 @@
       <h2 v-if="showElement[0]">Ostatnie wpisy</h2></transition
     >
     <div class="posts-container">
-      <div
-        v-for="(post, index) in posts.posts"
-        :key="index"
-        class="post-container"
-      >
-        <transition name="blogElement">
-          <img
-            v-show="showElement[index]"
-            class="post-image"
-            :src="post.image"
-            alt="post image"
-          />
-        </transition>
-        <transition name="blogElement">
-          <div v-show="showElement[index]" class="post-body">
-            <h4 class="post-title">{{ post.title }}</h4>
-            <p class="post-description">{{ post.description }}</p>
-          </div>
-        </transition>
+      <div v-for="(id, index) in 3" :key="index" class="post-container">
+        <Suspense>
+          <template #default>
+            <BlogElement :id="id - 1" />
+          </template>
+          <template #fallback>
+            <BlogElementSceleton />
+          </template>
+        </Suspense>
       </div>
     </div>
 
@@ -33,17 +23,18 @@
       snapAlign="center"
     >
       <slide
-        v-for="(post, index) in posts.posts"
+        v-for="(id, index) in 3"
         :key="index"
         class="carousel-posts-container"
       >
-        <div class="carousel-item">
-          <img class="post-image" :src="post.image" alt="post image" />
-          <div class="post-body">
-            <h4 class="post-title">{{ post.title }}</h4>
-            <p class="post-description">{{ post.description }}</p>
-          </div>
-        </div>
+        <Suspense>
+          <template #default>
+            <BlogElement :id="id - 1" />
+          </template>
+          <template #fallback>
+            <BlogElementSceleton />
+          </template>
+        </Suspense>
       </slide>
     </carousel>
     <transition name="blogElement">
@@ -58,6 +49,8 @@
 import { onMounted, ref } from "vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import BlogElement from "@/components/BlogElementCarouselItem.vue";
+import BlogElementSceleton from "@/components/BlogElementCarouselItemSceleton.vue";
 
 const posts = ref({
   posts: [
@@ -119,25 +112,10 @@ h2 {
   text-align: left;
 }
 
-.non-carousel {
-  display: none;
-}
-
 .carousel {
   width: 100%;
 }
 
-.carousel-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 350px;
-  background-color: white;
-}
-
-.carousel-item:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
 .posts-container {
   display: none;
 }
@@ -147,28 +125,6 @@ h2 {
   width: 350px;
   margin: 25px 0;
   transition: all 0.3s ease;
-}
-
-.post-image {
-  height: 250px;
-  width: 350px;
-  object-fit: cover;
-  object-position: center;
-}
-
-.post-body {
-  height: 200px;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.post-title {
-  border-bottom: solid rgb(150, 150, 150) 0.5px;
-  font-size: 20px;
-  font-weight: 300;
-  padding-bottom: 10px;
-  text-align: left;
-  margin: 0 0 20px 0;
 }
 
 .more-articles {
@@ -185,18 +141,13 @@ h2 {
   color: #2c3e50;
   transition: all 1s ease;
   margin-top: 30px;
+  cursor: pointer;
 }
 
 .more-articles:hover {
   font-size: 18px;
   background-color: #2c3e50;
   color: #ffffff;
-}
-
-.post-description {
-  font-size: 15px;
-  font-weight: 300;
-  text-align: left;
 }
 
 .blogElement-enter-from,
@@ -230,7 +181,6 @@ h2 {
   .posts-container {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     flex-wrap: wrap;
     gap: 50px;
     margin: auto;
@@ -244,7 +194,6 @@ h2 {
   .post-container {
     display: flex;
     flex-direction: column;
-    /* background-color: white; */
     width: 300px;
     height: 350px;
     margin: 25px 0;
@@ -253,20 +202,6 @@ h2 {
 
   .post-container:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .post-image {
-    height: 150px;
-    width: 300px;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .post-body {
-    height: 200px;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: white;
   }
 }
 

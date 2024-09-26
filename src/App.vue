@@ -178,7 +178,6 @@ nav {
   align-items: center;
   position: fixed;
   z-index: 9;
-  /* box-shadow: 0px 10px 15px -8px rgb(81, 81, 81); */
 }
 
 .dropdown-tabs .router-link {
