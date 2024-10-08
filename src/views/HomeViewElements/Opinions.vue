@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const opinions = ref([
   {
@@ -53,6 +53,14 @@ const opinions = ref([
 
 const showElement = ref(false);
 
+const handleParalax = () => {
+  let scrollPosition = window.pageYOffset;
+
+  document.getElementById("paralax").style.transform = `translateY(${
+    scrollPosition * 0.3 - 500
+  }px)`;
+};
+
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -64,13 +72,11 @@ onMounted(() => {
   const target = document.getElementById(`opinion-element-observe-target`);
   observer.observe(target);
 
-  window.addEventListener("scroll", function () {
-    let scrollPosition = window.pageYOffset;
+  window.addEventListener("scroll", handleParalax);
+});
 
-    document.getElementById("paralax").style.transform = `translateY(${
-      scrollPosition * 0.3 - 500
-    }px)`;
-  });
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleParalax);
 });
 </script>
 

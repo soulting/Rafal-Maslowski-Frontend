@@ -5,14 +5,11 @@
     >
     <div class="posts-container">
       <div v-for="(id, index) in 3" :key="index" class="post-container">
-        <Suspense>
-          <template #default>
-            <BlogElement :id="id - 1" />
-          </template>
-          <template #fallback>
-            <BlogElementSceleton />
-          </template>
-        </Suspense>
+        <BlogElement
+          v-if="!postsHeaders.isLoading"
+          :post="postsHeaders.posts[id - 1]"
+        />
+        <BlogElementSceleton v-else />
       </div>
     </div>
 
@@ -27,14 +24,11 @@
         :key="index"
         class="carousel-posts-container"
       >
-        <Suspense>
-          <template #default>
-            <BlogElement :id="id - 1" />
-          </template>
-          <template #fallback>
-            <BlogElementSceleton />
-          </template>
-        </Suspense>
+        <BlogElement
+          v-if="!postsHeaders.isLoading"
+          :post="postsHeaders.posts[id - 1]"
+        />
+        <BlogElementSceleton v-else />
       </slide>
     </carousel>
     <transition name="blogElement">
@@ -51,33 +45,18 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import BlogElement from "@/components/BlogElementCarouselItem.vue";
 import BlogElementSceleton from "@/components/BlogElementCarouselItemSceleton.vue";
+import getPosts from "@/composables/getBlogPosts";
 
-const posts = ref({
-  posts: [
-    {
-      title: "Wprowadzenie do JavaScript",
-      description:
-        "Poznaj podstawy języka JavaScript i jego zastosowania w tworzeniu interaktywnych stron internetowych.",
-      image: require("@/assets/backgrounds/image1.png"),
-    },
-    {
-      title: "Zalety Programowania Funkcyjnego",
-      description:
-        "Dowiedz się, dlaczego programowanie funkcyjne zyskuje na popularności i jakie są jego główne zalety.",
-      image: require("@/assets/backgrounds/image2.png"),
-    },
-    {
-      title: "Tworzenie Responsywnych Stron",
-      description:
-        "Jak budować strony internetowe, które działają na różnych urządzeniach dzięki technikom responsywności.",
-      image: require("@/assets/backgrounds/image3.png"),
-    },
-  ],
+const postsHeaders = ref({
+  isLoading: true,
+  posts: [],
 });
 
 const showElement = ref([false, false, false, false]);
 
 onMounted(() => {
+  getPosts(postsHeaders);
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {

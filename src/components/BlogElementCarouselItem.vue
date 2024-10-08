@@ -1,46 +1,25 @@
 <template>
-  <div class="carousel-item">
-    <img class="post-image" :src="posts.posts[id].image" alt="post image" />
+  <div @click="goTo(post.id)" class="carousel-item">
+    <img class="post-image" :src="post.image" alt="post image" />
     <div class="post-body">
-      <h4 class="post-title">{{ posts.posts[id].title }}</h4>
-      <p class="post-description">{{ posts.posts[id].description }}</p>
+      <h4 class="post-title">{{ post.title }}</h4>
+      <p class="post-description">{{ post.description }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({ id: Number });
+import getBlogPost from "@/composables/getBlogPost.js";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const posts = await fetchPosts();
+const router = useRouter();
 
-async function fetchPosts() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        posts: [
-          {
-            title: "Wprowadzenie do JavaScript",
-            description:
-              "Poznaj podstawy języka JavaScript i jego zastosowania w tworzeniu interaktywnych stron internetowych.",
-            image: require("@/assets/backgrounds/image1.png"),
-          },
-          {
-            title: "Zalety Programowania Funkcyjnego",
-            description:
-              "Dowiedz się, dlaczego programowanie funkcyjne zyskuje na popularności i jakie są jego główne zalety.",
-            image: require("@/assets/backgrounds/image2.png"),
-          },
-          {
-            title: "Tworzenie Responsywnych Stron",
-            description:
-              "Jak budować strony internetowe, które działają na różnych urządzeniach dzięki technikom responsywności.",
-            image: require("@/assets/backgrounds/image3.png"),
-          },
-        ],
-      });
-    }, 3000);
-  });
-}
+const props = defineProps({ post: Object });
+
+const goTo = (postID) => {
+  router.push({ name: "post", query: { id: postID } });
+};
 </script>
 
 <style scoped>
@@ -70,6 +49,7 @@ async function fetchPosts() {
 }
 
 .post-title {
+  min-height: 50px;
   border-bottom: solid rgb(150, 150, 150) 0.5px;
   font-size: 20px;
   font-weight: 300;
@@ -79,9 +59,10 @@ async function fetchPosts() {
 }
 
 .post-description {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
   text-align: left;
+  line-height: 20px;
 }
 
 @media (min-width: 768px) {

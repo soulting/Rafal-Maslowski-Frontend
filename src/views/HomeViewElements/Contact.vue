@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const showElement = ref(false);
 
@@ -81,6 +81,14 @@ const sendMessage = () => {
   }
 };
 
+const handleParalax = () => {
+  let scrollPosition = window.pageYOffset;
+
+  document.getElementById("parallax").style.transform = `scale(${
+    1 + (scrollPosition - 2000) * 0.0003
+  })`;
+};
+
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -92,13 +100,11 @@ onMounted(() => {
   const target = document.getElementById(`contact-element-observe-target`);
   observer.observe(target);
 
-  window.addEventListener("scroll", function () {
-    let scrollPosition = window.pageYOffset;
+  window.addEventListener("scroll", handleParalax);
+});
 
-    document.getElementById("parallax").style.transform = `scale(${
-      1 + (scrollPosition - 2000) * 0.0003
-    })`;
-  });
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleParalax);
 });
 </script>
 
@@ -188,7 +194,6 @@ onMounted(() => {
   border-bottom: solid 1px black;
   outline: none;
   width: 100%;
-  /* width: 300px; */
   box-sizing: border-box;
   position: relative;
   z-index: 1;

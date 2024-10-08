@@ -10,7 +10,7 @@
         <img class="navbar-img" src="@/assets/RM_logo.png" alt="icon image" />
       </router-link>
       <div class="tab-container">
-        <router-link class="router-link" to="/about">Blog </router-link>
+        <router-link class="router-link" to="/blog">Blog </router-link>
         <router-link class="router-link" to="/about">O Mnie </router-link>
         <router-link class="router-link" to="/about">Kontakt </router-link>
         <router-link class="router-link" to="/about">Kredyt </router-link>
