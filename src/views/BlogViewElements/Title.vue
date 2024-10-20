@@ -2,7 +2,7 @@
   <section class="blog-view-content-container">
     <div class="video-container">
       <video
-        src="@/assets/video_backgrounds/5335804-hd_1920_1080_30fps.mp4"
+        src="@/assets/video_backgrounds/7317309-uhd_3840_2160_25fps.mp4"
         type="video/mp4"
         autoplay
         loop
@@ -43,7 +43,7 @@ export default {};
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.2);
   z-index: -1;
 }
 

@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^6.0.1",
+    "@vueuse/core": "^11.1.0",
     "core-js": "^3.8.3",
+    "v-click-outside": "^3.2.0",
     "vue": "^3.2.13",
     "vue-carousel": "^0.18.0",
     "vue-router": "^4.0.3",

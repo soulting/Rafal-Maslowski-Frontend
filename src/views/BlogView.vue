@@ -2,11 +2,6 @@
   <Title />
   <Selectors />
   <Contact />
-  <Contact />
-  <Contact />
-  <Contact />
-  <Contact />
-  <Contact />
 </template>
 
 <script setup>
