@@ -32,7 +32,7 @@
       </slide>
     </carousel>
     <transition name="blogElement">
-      <button v-if="showElement[3]" class="more-articles">
+      <button v-if="showElement[3]" @click="goToBlog" class="more-articles">
         Więcej wpisów
       </button></transition
     >
@@ -46,13 +46,20 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import BlogElement from "@/components/BlogElementCarouselItem.vue";
 import BlogElementSceleton from "@/components/BlogElementCarouselItemSceleton.vue";
 import getPosts from "@/composables/getBlogPosts";
+import { useRoute, useRouter } from "vue-router";
 
 const postsHeaders = ref({
   isLoading: true,
   posts: [],
 });
 
+const router = useRouter();
+
 const showElement = ref([false, false, false, false]);
+
+const goToBlog = () => {
+  router.push("/blog");
+};
 
 onMounted(() => {
   getPosts(postsHeaders);

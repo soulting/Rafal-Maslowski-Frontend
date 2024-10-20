@@ -1,13 +1,18 @@
 <template>
-  
+  <Title />
+  <Selectors />
+  <Contact />
+  <Contact />
+  <Contact />
+  <Contact />
+  <Contact />
+  <Contact />
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import Contact from "@/views/HomeViewElements/Contact.vue";
+import Title from "@/views/BlogViewElements/Title.vue";
+import Selectors from "@/views/BlogViewElements/PostSelector.vue";
 </script>
 
-<style>
-
-</style>
+<style scoped></style>

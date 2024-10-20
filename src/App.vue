@@ -41,13 +41,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const menuOpen = ref(false);
 
 const openMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
+
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 </script>
 
 <style>

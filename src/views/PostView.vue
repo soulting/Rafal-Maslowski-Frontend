@@ -1,14 +1,25 @@
 <template>
   <section v-if="!blogPost.isLoading" class="post-view-post-container">
     <h1 class="title-section">{{ blogPost.post.title }}</h1>
-    <p>Opublikowano 08/10/2024 przez R. Masłowski</p>
+    <p class="publication-date">
+      Opublikowano
+      <span class="highlight">{{ blogPost.post.date }}</span> przez
+      <span class="highlight">R. Masłowski</span>
+    </p>
     <hr />
     <div class="body-section" v-html="blogPost.post.code"></div>
     <hr />
-    <div class="fotter-section"></div>
   </section>
-  <section v-else>Nie mogę załadować danych</section>
-  <Contact />
+  <section class="post-view-post-container-loader" v-else>
+    <img src="@/assets/RM_logo.png" alt="Loading..." class="loading-image" />
+
+    <div class="dot-container">
+      <img class="dot" id="first" src="@/assets/icons/dot.png" alt="dot" />
+      <img class="dot" id="second" src="@/assets/icons/dot.png" alt="dot" />
+      <img class="dot" id="third" src="@/assets/icons/dot.png" alt="dot" />
+    </div>
+  </section>
+  <Contact v-if="!blogPost.isLoading" />
 </template>
 
 <script setup>
@@ -29,19 +40,77 @@ const blogPost = ref({
 blogPost.value.id = route.query.id;
 getBlogPost(blogPost);
 
-onMounted(async () => {});
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 </script>
 
 <style>
+.loading-image {
+  width: 150px; /* Dostosuj rozmiar logo */
+}
+
+.dot-container {
+  display: flex;
+  gap: 30px;
+}
+
+.dot {
+  height: 20px;
+  width: auto;
+}
+
+#first {
+  animation: dot-animation 1.5s infinite;
+  animation-delay: 0.25s;
+}
+
+#second {
+  animation: dot-animation 1.5s infinite;
+  animation-delay: 0.5s;
+}
+
+#third {
+  animation: dot-animation 1.5s infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes dot-animation {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.7;
+  }
+  100% {
+    scale: 1;
+  }
+}
+.post-view-post-container-loader {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.highlight {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.publication-date {
+  text-align: left;
+}
+
 .post-view-post-container img {
   max-width: 100%;
   height: auto;
 }
 
 .post-view-post-container {
-  /* text-align: justify; */
-  padding: 10px;
-  padding-top: 100px;
+  padding: 100px 20px 20px 20px;
   box-sizing: border-box;
   overflow-wrap: break-word;
 }
@@ -50,7 +119,14 @@ onMounted(async () => {});
   font-size: 25px;
 }
 
-.post-view-post-container h1 h2 h3 h4 h5 h6 span {
+.post-view-post-container h1,
+.post-view-post-container h2,
+.post-view-post-container h3,
+.post-view-post-container h4,
+.post-view-post-container h5,
+.post-view-post-container h6,
+.post-view-post-container span,
+.post-view-post-container li {
   text-align: left;
 }
 
@@ -69,25 +145,25 @@ onMounted(async () => {});
 
 @media (min-width: 450px) {
   .post-view-post-container {
-    padding: 30px;
+    padding: 100px 30px 30px 30px;
   }
 }
 
 @media (min-width: 768px) {
   .post-view-post-container {
-    padding: 80px;
+    padding: 100px 80px 80px 80px;
   }
 }
 
 @media (min-width: 1000px) {
   .post-view-post-container {
-    padding: 150px;
+    padding: 100px 150px 80px 150px;
   }
 }
 
 @media (min-width: 1300px) {
   .post-view-post-container {
-    padding: 200px;
+    padding: 100px 200px 80px 200px;
   }
 }
 </style>

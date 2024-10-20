@@ -56,6 +56,8 @@ const showElement = ref(false);
 
 const showError = ref(false);
 
+const elementStartPosition = ref(null);
+
 const message = ref({ name: "", email: "", messageText: "" });
 
 const sendMessage = () => {
@@ -82,10 +84,8 @@ const sendMessage = () => {
 };
 
 const handleParalax = () => {
-  let scrollPosition = window.pageYOffset;
-
   document.getElementById("parallax").style.transform = `scale(${
-    1 + (scrollPosition - 2000) * 0.0003
+    1 + (window.scrollY - elementStartPosition.value) * 0.00018
   })`;
 };
 
@@ -94,6 +94,8 @@ onMounted(() => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         showElement.value = true;
+
+        elementStartPosition.value = window.scrollY;
       }
     });
   });
@@ -112,7 +114,7 @@ onUnmounted(() => {
 .contact {
   display: flex;
   flex-direction: column;
-  padding: 50px 25px 0 25px;
+  padding: 50px 0 0 0;
   width: 100vw;
   align-items: center;
   justify-content: center;
@@ -120,6 +122,7 @@ onUnmounted(() => {
   z-index: 0;
   overflow: hidden;
   min-height: 600px;
+  box-sizing: border-box;
 }
 
 .contact:after {
@@ -145,7 +148,7 @@ onUnmounted(() => {
 .ontact-background-image {
   position: absolute;
   min-height: 100%;
-  min-width: 100%;
+  min-width: 100vw;
   z-index: -1;
   bottom: 0;
 }
@@ -213,6 +216,8 @@ onUnmounted(() => {
   z-index: 1;
   background: transparent;
   box-sizing: border-box;
+  border: solid black 1px;
+  resize: none;
 }
 
 .message-field::-webkit-resizer {
