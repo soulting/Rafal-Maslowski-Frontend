@@ -3,7 +3,7 @@
     <!-- <div class="posts-large-view"></div> -->
     <div v-if="!posts.isLoading" class="posts-small-view">
       <div
-        v-for="(item, index) in posts.posts"
+        v-for="(item, index) in filteredPosts"
         :key="index"
         class="post-element"
       >
@@ -25,7 +25,21 @@ const props = defineProps({
 
 const posts = usePosts();
 
-const filteredPosts = computed((list) => {});
+const filteredPosts = computed(() => {
+  if (props.category === "WSZYSTKIE WPISY") {
+    return posts.posts;
+  } else {
+    return posts.posts.filter((element) => element.category === props.category);
+  }
+});
+
+const evenPosts = computed(() => {
+  return filteredPosts.value.filter((element, index) => index % 2 === 0);
+});
+
+const oodPosts = computed(() => {
+  return filteredPosts.value.filter((element, index) => index % 2 !== 0);
+});
 </script>
 
 <style scoped>
@@ -67,5 +81,29 @@ const filteredPosts = computed((list) => {});
 .post-element p {
   width: 325px;
   text-align: left;
+}
+
+@media (min-width: 450px) {
+  .post-element {
+    width: 400px;
+  }
+
+  .post-element img {
+    width: 400px;
+  }
+
+  .post-element h2 {
+    width: 360px;
+  }
+
+  .post-element p {
+    width: 360px;
+  }
+}
+
+@media (min-width: 768px) {
+  .posts-small-view {
+    display: none;
+  }
 }
 </style>
