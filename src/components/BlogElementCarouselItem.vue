@@ -44,6 +44,7 @@ const goTo = (postID) => {
 
 .post-body {
   height: 200px;
+  width: 100%;
   padding: 20px;
   box-sizing: border-box;
 }

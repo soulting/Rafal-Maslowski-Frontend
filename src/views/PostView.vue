@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import getBlogPost from "@/composables/getBlogPost";
+import { getBlogPost } from "@/composables/getBlogPost";
 import router from "@/router";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -32,15 +32,13 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
 const route = useRoute();
 
 const blogPost = ref({
-  id: null,
+  id: route.query.id || null,
   isLoading: true,
   post: null,
 });
 
-blogPost.value.id = route.query.id;
-getBlogPost(blogPost);
-
 onMounted(() => {
+  getBlogPost(blogPost);
   window.scrollTo(0, 0);
 });
 </script>

@@ -41,6 +41,8 @@
 import { ref, computed } from "vue";
 import { onClickOutside } from "@vueuse/core";
 
+const emit = defineEmits(["changeCategory"]);
+
 // Refs
 const target = ref(null);
 const showBox = ref(false);
@@ -71,10 +73,11 @@ const changeBox = () => {
 
 const selectCategory = (category) => {
   selectedCategory.value = category;
+  emit("changeCategory", selectedCategory.value);
 };
 </script>
 
-<style>
+<style scoped>
 /* Main container */
 .post-selector {
   height: 70px;

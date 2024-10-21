@@ -5,10 +5,7 @@
     >
     <div class="posts-container">
       <div v-for="(id, index) in 3" :key="index" class="post-container">
-        <BlogElement
-          v-if="!postsHeaders.isLoading"
-          :post="postsHeaders.posts[id - 1]"
-        />
+        <BlogElement v-if="!posts.isLoading" :post="posts.posts[id - 1]" />
         <BlogElementSceleton v-else />
       </div>
     </div>
@@ -24,10 +21,7 @@
         :key="index"
         class="carousel-posts-container"
       >
-        <BlogElement
-          v-if="!postsHeaders.isLoading"
-          :post="postsHeaders.posts[id - 1]"
-        />
+        <BlogElement v-if="!posts.isLoading" :post="posts.posts[id - 1]" />
         <BlogElementSceleton v-else />
       </slide>
     </carousel>
@@ -45,13 +39,11 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import BlogElement from "@/components/BlogElementCarouselItem.vue";
 import BlogElementSceleton from "@/components/BlogElementCarouselItemSceleton.vue";
-import getPosts from "@/composables/getBlogPosts";
-import { useRoute, useRouter } from "vue-router";
 
-const postsHeaders = ref({
-  isLoading: true,
-  posts: [],
-});
+import { useRoute, useRouter } from "vue-router";
+import { usePosts } from "@/stores/posts";
+
+const posts = usePosts();
 
 const router = useRouter();
 
@@ -62,7 +54,7 @@ const goToBlog = () => {
 };
 
 onMounted(() => {
-  getPosts(postsHeaders);
+  posts.getPosts();
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {

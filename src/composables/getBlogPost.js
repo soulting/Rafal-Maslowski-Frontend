@@ -1,4 +1,4 @@
-const getBlogPost = async (blogPost) => {
+export const getBlogPost = async (blogPost) => {
   try {
     const response = await fetch(
       `http://127.0.0.1:5000/getBlogPost?id=${blogPost.value.id}`,
@@ -18,5 +18,3 @@ const getBlogPost = async (blogPost) => {
     blogPost.value.isLoading = false;
   }
 };
-
-export default getBlogPost;
