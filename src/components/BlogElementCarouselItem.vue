@@ -1,5 +1,5 @@
 <template>
-  <div @click="goTo(post.id)" class="carousel-item">
+  <div @click="goTo(post.id)" class="item">
     <img class="post-image" :src="post.image" alt="post image" />
     <div class="post-body">
       <h4 class="post-title">{{ post.title }}</h4>
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import getBlogPost from "@/composables/getBlogPost.js";
+import { getBlogPost } from "@/composables/getBlogPost.js";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -23,28 +23,26 @@ const goTo = (postID) => {
 </script>
 
 <style scoped>
-.carousel-item {
+.item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 350px;
+  /* width: 350px; */
   background-color: white;
-}
-
-.carousel-item:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: 100%;
 }
 
 .post-image {
-  height: 250px;
-  width: 350px;
+  /* height: 250px;
+  width: 350px; */
+  width: 100%;
   object-fit: cover;
   object-position: center;
 }
 
 .post-body {
-  height: 200px;
-  width: 100%;
+  /* height: 200px;
+  width: 100%; */
   padding: 20px;
   box-sizing: border-box;
 }
@@ -67,19 +65,19 @@ const goTo = (postID) => {
 }
 
 @media (min-width: 768px) {
-  .carousel-item {
-    width: 300px;
+  .item {
+    /* width: 300px; */
   }
 
   .post-image {
-    height: 150px;
-    width: 300px;
+    /* height: 150px;
+    width: 300px; */
     object-fit: cover;
     object-position: center;
   }
 
   .post-body {
-    height: 200px;
+    /* height: 200px; */
     padding: 20px;
     box-sizing: border-box;
     background-color: white;

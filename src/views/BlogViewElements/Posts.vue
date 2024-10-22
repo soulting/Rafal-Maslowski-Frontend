@@ -1,15 +1,32 @@
 <template>
   <section class="posts-container">
-    <!-- <div class="posts-large-view"></div> -->
+    <div class="posts-large-view">
+      <div class="large-view-collumn">
+        <div
+          v-for="(item, index) in evenPosts"
+          :key="index"
+          class="post-element"
+        >
+          <BlogElement :post="item" />
+        </div>
+      </div>
+      <div class="large-view-collumn">
+        <div
+          v-for="(item, index) in oodPosts"
+          :key="index"
+          class="post-element"
+        >
+          <BlogElement :post="item" />
+        </div>
+      </div>
+    </div>
     <div v-if="!posts.isLoading" class="posts-small-view">
       <div
         v-for="(item, index) in filteredPosts"
         :key="index"
         class="post-element"
       >
-        <img :src="item.image" alt="post image" />
-        <h2>{{ item.title }}</h2>
-        <p>{{ item.description }}</p>
+        <BlogElement :post="item" />
       </div>
     </div>
   </section>
@@ -18,6 +35,7 @@
 <script setup>
 import { usePosts } from "@/stores/posts";
 import { computed } from "vue";
+import BlogElement from "@/components/BlogElementCarouselItem.vue";
 
 const props = defineProps({
   category: String,
@@ -34,11 +52,15 @@ const filteredPosts = computed(() => {
 });
 
 const evenPosts = computed(() => {
-  return filteredPosts.value.filter((element, index) => index % 2 === 0);
+  if (filteredPosts.value) {
+    return filteredPosts.value.filter((element, index) => index % 2 === 0);
+  } else return null;
 });
 
 const oodPosts = computed(() => {
-  return filteredPosts.value.filter((element, index) => index % 2 !== 0);
+  if (filteredPosts.value) {
+    return filteredPosts.value.filter((element, index) => index % 2 !== 0);
+  } else return null;
 });
 </script>
 
@@ -46,6 +68,10 @@ const oodPosts = computed(() => {
 .posts-container {
   background-color: rgb(248, 248, 248);
   padding: 20px 0;
+}
+
+.posts-large-view {
+  display: none;
 }
 
 .posts-small-view {
@@ -63,47 +89,45 @@ const oodPosts = computed(() => {
   justify-content: center;
   width: 350px;
   background-color: white;
-  padding-bottom: 15px;
 }
 
-.post-element img {
-  width: 350px;
-  height: auto;
-}
-
-.post-element h2 {
-  width: 325px;
-  text-align: left;
-  padding: 15px 0;
-  border-bottom: solid rgb(150, 150, 150) 0.5px;
-}
-
-.post-element p {
-  width: 325px;
-  text-align: left;
+.post-element:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 450px) {
   .post-element {
     width: 400px;
   }
-
-  .post-element img {
-    width: 400px;
-  }
-
-  .post-element h2 {
-    width: 360px;
-  }
-
-  .post-element p {
-    width: 360px;
-  }
 }
 
 @media (min-width: 768px) {
+  .post-element {
+    width: 300px;
+  }
+
   .posts-small-view {
     display: none;
+  }
+  .posts-large-view {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 50px;
+  }
+
+  .large-view-collumn {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1000px) {
+  .post-element {
+    width: 350px;
   }
 }
 </style>
