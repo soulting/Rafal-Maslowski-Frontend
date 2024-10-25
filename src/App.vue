@@ -2,12 +2,12 @@
   <main>
     <img
       class="navbar-img-shadow"
-      src="@/assets/RM_logo.png"
+      src="@/assets/RM_logo.svg"
       alt="icon shadow"
     />
     <nav>
       <router-link to="/">
-        <img class="navbar-img" src="@/assets/RM_logo.png" alt="icon image" />
+        <img class="navbar-img" src="@/assets/RM_logo.svg" alt="icon image" />
       </router-link>
       <div class="tab-container">
         <router-link class="router-link" to="/blog">Blog </router-link>

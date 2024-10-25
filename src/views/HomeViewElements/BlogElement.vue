@@ -5,7 +5,11 @@
     >
     <div class="posts-container">
       <div v-for="(id, index) in 3" :key="index" class="post-container">
-        <BlogElement v-if="!posts.isLoading" :post="posts.posts[id - 1]" />
+        <BlogElement
+          v-if="!posts.isLoading"
+          :post="posts.posts[id - 1]"
+          :homePage="true"
+        />
         <BlogElementSceleton v-else />
       </div>
     </div>
@@ -21,7 +25,11 @@
         :key="index"
         class="carousel-posts-container"
       >
-        <BlogElement v-if="!posts.isLoading" :post="posts.posts[id - 1]" />
+        <BlogElement
+          class="abc"
+          v-if="!posts.isLoading"
+          :post="posts.posts[id - 1]"
+        />
         <BlogElementSceleton v-else />
       </slide>
     </carousel>
@@ -173,7 +181,7 @@ h2 {
     display: flex;
     flex-direction: column;
     width: 300px;
-    height: 350px;
+    /* height: 350px; */
     margin: 25px 0;
     transition: all 0.3s ease;
   }

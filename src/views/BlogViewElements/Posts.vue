@@ -34,7 +34,7 @@
 
 <script setup>
 import { usePosts } from "@/stores/posts";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import BlogElement from "@/components/BlogElementCarouselItem.vue";
 
 const props = defineProps({
@@ -61,6 +61,12 @@ const oodPosts = computed(() => {
   if (filteredPosts.value) {
     return filteredPosts.value.filter((element, index) => index % 2 !== 0);
   } else return null;
+});
+
+onMounted(() => {
+  if (posts.isLoading) {
+    posts.getPosts();
+  }
 });
 </script>
 
@@ -89,10 +95,12 @@ const oodPosts = computed(() => {
   justify-content: center;
   width: 350px;
   background-color: white;
+  transition: all ease 0.5s;
+  cursor: pointer;
 }
 
 .post-element:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 450px) {

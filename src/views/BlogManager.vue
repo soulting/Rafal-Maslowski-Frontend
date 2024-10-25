@@ -63,6 +63,12 @@
         class="image-url"
         placeholder="link do obrazu"
       />
+
+      <select v-model="postData.category" class="select-category">
+        <option value="UBEZPIECZENIA">UBEZPIECZENIA</option>
+        <option value="FINANSE">FINANSE</option>
+        <option value="KREDYTY HIPOTECZNE">KREDYTY HIPOTECZNE</option>
+      </select>
       <div id="sample">
         <Editor
           @init="onEditorInit"
@@ -92,7 +98,6 @@ import Editor from "@tinymce/tinymce-vue";
 import { onMounted, ref } from "vue";
 import getPosts from "@/composables/getBlogPosts.js";
 import { useRouter } from "vue-router";
-
 import postBlogPost from "@/composables/postBlogPost.js";
 
 const router = useRouter();
@@ -107,6 +112,7 @@ const postData = ref({
   description: null,
   image: null,
   code: null,
+  category: null,
 });
 
 const showNewPost = ref(false);
@@ -132,7 +138,8 @@ const getPostContent = () => {
     !postData.value.title ||
     !postData.value.description ||
     !postData.value.image ||
-    !postData.value.code
+    !postData.value.code ||
+    !postData.value.category
   ) {
     alert("Uzupełnij wszystkie pola");
     return;
@@ -264,6 +271,12 @@ const switchEditor = () => {
   border: solid black 0.5px;
   margin-bottom: 30px;
   width: 800px;
+}
+
+.select-category {
+  height: 30px;
+  width: 500px;
+  margin-bottom: 30px;
 }
 
 .new-post-controls {
