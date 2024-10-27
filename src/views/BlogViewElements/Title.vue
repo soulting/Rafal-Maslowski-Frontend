@@ -1,23 +1,52 @@
 <template>
-  <section class="blog-view-content-container">
+  <section class="blog-view-content-container" id="target">
     <div class="video-container">
       <video
         src="@/assets/video_backgrounds/7317309-uhd_3840_2160_25fps.mp4"
         type="video/mp4"
+        ref="videoElament"
         autoplay
         loop
         muted
       ></video>
-      <div class="blog-view-title-container">
-        <h1>Mowa o pieniądzach</h1>
-        <h2>Blog o tematyce finansowej</h2>
-      </div>
+
+      <transition name="title">
+        <div v-if="showTitle" class="blog-view-title-container">
+          <h1>Mowa o pieniądzach</h1>
+          <h2>Blog o tematyce finansowej</h2>
+        </div>
+      </transition>
     </div>
   </section>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { onMounted, ref } from "vue";
+
+const showTitle = ref(false);
+const videoElament = ref(null);
+const showSection = ref(false);
+
+const emit = defineEmits(["videoLoaded"]);
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        showTitle.value = true;
+      }
+    });
+  });
+
+  const target = document.getElementById(`target`);
+  observer.observe(target);
+
+  if (videoElament) {
+    videoElament.value.addEventListener("canplaythrough", () => {
+      emit("videoLoaded");
+    });
+  }
+});
 </script>
 
 <style scoped>
@@ -79,6 +108,23 @@ video {
   color: rgb(179, 179, 179);
   margin: 0;
   font-size: 20px;
+}
+
+.title-enter-from,
+.title-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 100%);
+}
+
+.title-enter-active,
+.title-leave-active {
+  transition: all 1s ease;
+}
+
+.title-enter-to,
+.title-leave-from {
+  opacity: 1;
+  transform: translate(-50%, 0%);
 }
 
 @media (min-width: 450px) {
