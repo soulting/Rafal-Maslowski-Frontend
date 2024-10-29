@@ -48,7 +48,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style>
 .loading-image {
   width: 150px; /* Dostosuj rozmiar logo */
 }
