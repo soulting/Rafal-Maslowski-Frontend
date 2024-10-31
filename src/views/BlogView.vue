@@ -19,7 +19,7 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
 import Title from "@/views/BlogViewElements/Title.vue";
 import Selectors from "@/views/BlogViewElements/PostSelector.vue";
 import Posts from "@/views/BlogViewElements/Posts.vue";
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const category = ref("WSZYSTKIE WPISY");
 
@@ -32,6 +32,10 @@ const changeCategory = (item) => {
 const showSection = () => {
   showLoader.value = false;
 };
+
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 </script>
 
 <style scoped>

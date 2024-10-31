@@ -1,15 +1,15 @@
 <template>
   <section class="contact" id="contact-element-observe-target">
     <img
-      class="ontact-background-image"
-      src="@/assets/backgrounds/bohater.png"
+      class="contact-background-image"
+      src="@/assets/backgrounds/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg"
       alt="contact background image"
       id="parallax"
     />
-    <transition name="errorElement">
-      <div v-if="showError" class="problem-message">
-        <h3>Wystąpił problem</h3>
-        <p>Proszę wypełnić wszystkie pola i podać poprawny email</p>
+    <transition name="popupMessage">
+      <div v-if="showMessage" class="popup-message">
+        <h3>{{ popupTitle }}</h3>
+        <p>{{ popupDescription }}</p>
       </div>
     </transition>
     <div class="contact-details-container">
@@ -19,7 +19,7 @@
       <div class="input-container" id="element1">
         <transition name="contactElement">
           <div v-if="showElement" class="inner_input_container">
-            <p>Imię</p>
+            <p>Imię{{ showError }}</p>
             <input
               v-model="message.name"
               class="name"
@@ -51,16 +51,20 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
+import { sendMail } from "@/composables/sendMail";
 
 const showElement = ref(false);
 
-const showError = ref(false);
+const showMessage = ref(false);
+
+const popupTitle = ref(null);
+const popupDescription = ref(null);
 
 const elementStartPosition = ref(null);
 
 const message = ref({ name: "", email: "", messageText: "" });
 
-const sendMessage = () => {
+const sendMessage = async () => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const isTheMessageCorrect = ref(true);
@@ -74,19 +78,33 @@ const sendMessage = () => {
   }
 
   if (isTheMessageCorrect.value) {
-    console.log("send message");
+    const response = await sendMail(message.value);
+    if (response.message === "E-mail wysłany pomyślnie!") {
+      message.value.name = "";
+      message.value.email = "";
+      message.value.messageText = "";
+
+      popupTitle.value = "Wiadomość wysłana pomyślnie";
+      popupDescription.value =
+        "Dziękujemy za kontakt! Odpowiemy najszybciej jak to możliwe.";
+    }
   } else {
-    showError.value = true;
-    setTimeout(() => {
-      showError.value = false;
-    }, 3500);
+    popupTitle.value = "Wystąpił problem";
+    popupDescription.value =
+      "Proszę wypełnić wszystkie pola i podać poprawny email";
   }
+  showMessage.value = true;
+  setTimeout(() => {
+    showMessage.value = false;
+  }, 3500);
 };
 
 const handleParalax = () => {
-  document.getElementById("parallax").style.transform = `scale(${
-    1 + (window.scrollY - elementStartPosition.value) * 0.00018
-  })`;
+  if (window.scrollY - elementStartPosition.value > 1) {
+    document.getElementById("parallax").style.transform = `scale(${
+      1 + (window.scrollY - elementStartPosition.value) * 0.00018
+    })`;
+  }
 };
 
 onMounted(() => {
@@ -132,25 +150,19 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
   z-index: -1;
 }
 
-.problem-message {
-  top: 30vh;
+.contact-background-image {
   position: absolute;
-  background-color: rgb(255, 255, 255, 1);
-  border: solid black 0.5px;
-  padding: 0 25px 25px 25px;
-  z-index: 4;
-}
-
-.ontact-background-image {
-  position: absolute;
-  min-height: 100%;
-  min-width: 100vw;
   z-index: -1;
   bottom: 0;
+  object-position: center;
+  object-fit: cover;
+  height: 100%;
+  width: auto;
+  min-width: 100%;
 }
 
 .contact-details-container {
@@ -160,7 +172,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   padding: 25px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .input-container {
@@ -202,6 +214,23 @@ onUnmounted(() => {
   z-index: 1;
   background: transparent;
   margin-right: auto;
+  transition: all 1s ease;
+}
+
+.contact-details-container input:focus {
+  border-bottom: solid 1.5px rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.contact-details-container textarea {
+  transition: all 1s ease;
+}
+
+.contact-details-container textarea:focus {
+  border-bottom: solid 1.5px rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
 .message-container {
@@ -273,32 +302,37 @@ onUnmounted(() => {
   transition-delay: 1s;
 }
 
-.contactElement-enter-to,
-.contactElement-leave-from {
+.popup-message {
+  top: 40vh;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 5px;
+  padding: 0 25px 25px 25px;
+  z-index: 4;
+  color: white;
+}
+
+.popupMessage-enter-to,
+.popupMessage-leave-from {
   opacity: 1;
   transform: translateY(0%);
 }
 
-.errorElement-enter-from,
-.errorElement-leave-to {
+.popupMessage-enter-from,
+.popupMessage-leave-to {
   opacity: 0;
   transform: translateY(-100%);
 }
 
-.errorElement-enter-active,
-.errorElement-leave-active {
+.popupMessage-enter-active,
+.popupMessage-leave-active {
   transition: all 1s ease;
 }
 
-.errorElement-enter-to,
-.errorElement-leave-from {
-  opacity: 1;
-  transform: translateY(0%);
-}
-
 @media (min-width: 768px) {
-  .problem-message {
-    top: 100px;
+  .popup-message {
+    top: 120px;
   }
   .contact-details-container {
     width: 75%;
@@ -323,12 +357,23 @@ onUnmounted(() => {
     margin-left: 25px;
     margin-right: auto;
   }
+  .contact-background-image {
+    width: auto;
+    height: 100%;
+  }
 }
 
-@media (min-width: 1100px) {
-  .ontact-background-image {
-    min-height: 140%;
-    min-width: 100%;
+@media (min-width: 900px) {
+  .contact-background-image {
+    width: auto;
+    height: 125%;
+  }
+}
+
+@media (min-width: 1050px) {
+  .contact-background-image {
+    width: auto;
+    height: 150%;
   }
   .contact-details-container {
     width: 70%;

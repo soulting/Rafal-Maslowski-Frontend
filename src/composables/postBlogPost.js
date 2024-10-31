@@ -1,4 +1,4 @@
-const postBlogPost = async (postData) => {
+export const postBlogPost = async (postData) => {
   try {
     const response = await fetch("http://127.0.0.1:5000/postBlogPost", {
       method: "POST",
@@ -15,5 +15,3 @@ const postBlogPost = async (postData) => {
     console.error(error);
   }
 };
-
-export default postBlogPost;

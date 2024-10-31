@@ -16,6 +16,11 @@ import WhyMe from "./HomeViewElements/WhyMe.vue";
 import Banks from "./HomeViewElements/Banks.vue";
 import Options from "./HomeViewElements/Opinions.vue";
 import Contact from "./HomeViewElements/Contact.vue";
+import { onMounted, onUnmounted } from "vue";
+
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 </script>
 
 <style scoped>

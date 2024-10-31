@@ -96,9 +96,9 @@
 <script setup>
 import Editor from "@tinymce/tinymce-vue";
 import { onMounted, ref } from "vue";
-import getPosts from "@/composables/getBlogPosts.js";
+import { getBlogPosts } from "@/composables/getBlogPosts.js";
 import { useRouter } from "vue-router";
-import postBlogPost from "@/composables/postBlogPost.js";
+import { postBlogPost } from "@/composables/postBlogPost.js";
 
 const router = useRouter();
 
@@ -120,7 +120,7 @@ const showNewPost = ref(false);
 const editorInstance = ref(null);
 
 onMounted(() => {
-  getPosts(postsHeaders);
+  getBlogPosts(postsHeaders);
 });
 
 const onEditorInit = (evt) => {

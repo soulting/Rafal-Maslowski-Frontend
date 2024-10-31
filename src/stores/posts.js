@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import getBlogPosts from "@/composables/getBlogPosts";
+import { getBlogPosts } from "@/composables/getBlogPosts";
 
 export const usePosts = defineStore("posts", {
   state: () => {

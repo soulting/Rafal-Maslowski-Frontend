@@ -48,10 +48,6 @@ const menuOpen = ref(false);
 const openMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
-
-onMounted(() => {
-  window.scrollTo(0, 0);
-});
 </script>
 
 <style>
