@@ -2,7 +2,7 @@
   <section class="blog-view-content-container" id="target">
     <div class="video-container">
       <video
-        src="@/assets/video_backgrounds/7317309-uhd_3840_2160_25fps.mp4"
+        src="@/assets/video_backgrounds/7317309-uhd-3840-2160-25fps.mp4"
         type="video/mp4"
         ref="videoElament"
         autoplay

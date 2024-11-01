@@ -18,8 +18,8 @@
       </transition>
       <div class="input-container" id="element1">
         <transition name="contactElement">
-          <div v-if="showElement" class="inner_input_container">
-            <p>Imię{{ showError }}</p>
+          <div v-if="showElement" class="inner-input-container">
+            <p>Imię</p>
             <input
               v-model="message.name"
               class="name"
@@ -28,7 +28,7 @@
             /></div
         ></transition>
         <transition name="contactElement">
-          <div v-if="showElement" class="inner_input_container" id="element2">
+          <div v-if="showElement" class="inner-input-container" id="element2">
             <p>Email</p>
             <input v-model="message.email" class="e-mail" type="email" /></div
         ></transition>
@@ -54,36 +54,26 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { sendMail } from "@/composables/sendMail";
 
 const showElement = ref(false);
-
 const showMessage = ref(false);
-
-const popupTitle = ref(null);
-const popupDescription = ref(null);
-
+const popupTitle = ref("");
+const popupDescription = ref("");
 const elementStartPosition = ref(null);
-
 const message = ref({ name: "", email: "", messageText: "" });
 
-const sendMessage = async () => {
+const validateMessage = () => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return (
+    regex.test(message.value.email) &&
+    message.value.name !== "" &&
+    message.value.messageText !== ""
+  );
+};
 
-  const isTheMessageCorrect = ref(true);
-
-  if (
-    !regex.test(message.value.email) ||
-    message.value.name === "" ||
-    message.value.messageText === ""
-  ) {
-    isTheMessageCorrect.value = false;
-  }
-
-  if (isTheMessageCorrect.value) {
+const sendMessage = async () => {
+  if (validateMessage()) {
     const response = await sendMail(message.value);
     if (response.message === "E-mail wysłany pomyślnie!") {
-      message.value.name = "";
-      message.value.email = "";
-      message.value.messageText = "";
-
+      message.value = { name: "", email: "", messageText: "" };
       popupTitle.value = "Wiadomość wysłana pomyślnie";
       popupDescription.value =
         "Dziękujemy za kontakt! Odpowiemy najszybciej jak to możliwe.";
@@ -93,6 +83,7 @@ const sendMessage = async () => {
     popupDescription.value =
       "Proszę wypełnić wszystkie pola i podać poprawny email";
   }
+
   showMessage.value = true;
   setTimeout(() => {
     showMessage.value = false;
@@ -100,30 +91,36 @@ const sendMessage = async () => {
 };
 
 const handleParalax = () => {
-  if (window.scrollY - elementStartPosition.value > 1) {
+  if (
+    elementStartPosition.value !== null &&
+    window.scrollY - elementStartPosition.value > 1
+  ) {
     document.getElementById("parallax").style.transform = `scale(${
       1 + (window.scrollY - elementStartPosition.value) * 0.00018
     })`;
   }
 };
 
+let observer = null;
+
 onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
+  observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         showElement.value = true;
-
         elementStartPosition.value = window.scrollY;
       }
     });
   });
-  const target = document.getElementById(`contact-element-observe-target`);
-  observer.observe(target);
+
+  const target = document.getElementById("contact-element-observe-target");
+  if (target) observer.observe(target);
 
   window.addEventListener("scroll", handleParalax);
 });
 
 onUnmounted(() => {
+  if (observer) observer.disconnect();
   window.removeEventListener("scroll", handleParalax);
 });
 </script>
@@ -181,14 +178,14 @@ onUnmounted(() => {
   width: 100%;
 }
 
-.inner_input_container {
+.inner-input-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.inner_input_container p,
+.inner-input-container p,
 .contact-details-container p {
   font-size: 20px;
   margin: 16px auto 6px 16px;

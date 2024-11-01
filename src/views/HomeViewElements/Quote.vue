@@ -1,5 +1,14 @@
 <template>
   <section class="quote-backgrounds" id="quote-observe-target">
+    <video
+      class="background-video"
+      src="@/assets/video_backgrounds/7735854-hd_1920_1080_25fps.mp4"
+      type="video/mp4"
+      ref="videoElament"
+      autoplay
+      loop
+      muted
+    ></video>
     <transition name="quotesTransition">
       <div v-show="showQuotes" class="quotes-container">
         <p class="quote">
@@ -36,28 +45,29 @@ onMounted(() => {
 .quote-backgrounds {
   height: 250px;
   width: 100vw;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: changeBackground 30s infinite;
+
   transition: all 0.3s ease;
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   background-attachment: fixed;
 }
 
-@keyframes changeBackground {
-  0% {
-    background-image: url("@/assets/backgrounds/bohater.png");
-  }
-  50% {
-    background-image: url("@/assets/backgrounds/bohater3.png");
-  }
-  100% {
-    background-image: url("@/assets/backgrounds/bohater.png");
-  }
+.background-video {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 250px;
+  z-index: -1;
+}
+
+.quotes-container {
+  background-color: rgb(47, 46, 46, 0.7);
+  margin: 0 5px 15px 5px;
+  border-radius: 3px;
+  padding: 15px;
 }
 
 .quotesTransition-enter-from,
@@ -96,7 +106,15 @@ onMounted(() => {
 
 @media (min-width: 450px) {
   .quote-backgrounds {
-    height: 300px;
+    height: 350px;
+  }
+
+  .quotes-container {
+    margin: 0 15px 50px 15px;
+  }
+
+  .background-video {
+    height: 350px;
   }
 
   .quote {
@@ -105,6 +123,12 @@ onMounted(() => {
 
   .quote.signature {
     padding: 0 60px 0 10px;
+  }
+}
+
+@media (min-width: 600px) {
+  .background-video {
+    height: 450px;
   }
 }
 
@@ -120,6 +144,51 @@ onMounted(() => {
   .quote.signature {
     max-width: 1000px;
     padding-right: 220px;
+  }
+
+  .background-video {
+    height: 550px;
+  }
+}
+
+@media (min-width: 950px) {
+  .quote-backgrounds {
+    height: 450px;
+  }
+
+  .quotes-container {
+    margin: 0 15px 100px 15px;
+  }
+
+  .background-video {
+    height: 650px;
+    top: auto;
+    bottom: -220px;
+  }
+}
+
+@media (min-width: 1150px) {
+  .background-video {
+    height: 750px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .background-video {
+    height: 850px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .background-video {
+    height: 950px;
+  }
+}
+
+@media (min-width: 1650px) {
+  .background-video {
+    height: 1100px;
+    bottom: -280px;
   }
 }
 </style>

@@ -6,7 +6,8 @@ export const sendMail = async (mailData) => {
       body: JSON.stringify(mailData),
     });
     if (!response.ok) {
-      throw new Error("Could't send the mail");
+      const errorResponse = await response.json();
+      throw new Error(`Error: ${errorResponse.message}`);
     }
 
     const data = await response.json();
