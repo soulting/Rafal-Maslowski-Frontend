@@ -156,8 +156,11 @@ const goToBank = (bank_url) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 25px 0 50px 0;
+  padding: 25px 0 50px 0;
   position: relative;
+  background-color: white;
+  width: 100%;
+  height: 100%;
 }
 h2 {
   margin: 30px 0 30px 0;

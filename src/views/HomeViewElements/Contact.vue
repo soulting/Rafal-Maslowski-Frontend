@@ -129,7 +129,7 @@ onUnmounted(() => {
 .contact {
   display: flex;
   flex-direction: column;
-  padding: 50px 0 0 0;
+  padding: 50px 0 35px 0;
   width: 100vw;
   align-items: center;
   justify-content: center;

@@ -2,12 +2,12 @@
   <section class="quote-backgrounds" id="quote-observe-target">
     <video
       class="background-video"
-      src="@/assets/video_backgrounds/7735854-hd_1920_1080_25fps.mp4"
+      src="@/assets/video_backgrounds/Timeline 2.mp4"
       type="video/mp4"
-      ref="videoElament"
       autoplay
       loop
       muted
+      ref="videoElamentHome"
     ></video>
     <transition name="quotesTransition">
       <div v-show="showQuotes" class="quotes-container">
@@ -26,7 +26,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
+const emit = defineEmits(["videoHomeLoaded"]);
+
 const showQuotes = ref(false);
+const videoElamentHome = ref(null);
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
@@ -38,6 +41,12 @@ onMounted(() => {
   });
   const target = document.getElementById(`quote-observe-target`);
   observer.observe(target);
+
+  if (videoElamentHome.value) {
+    videoElamentHome.value.addEventListener("canplaythrough", () => {
+      emit("videoHomeLoaded");
+    });
+  }
 });
 </script>
 
@@ -45,7 +54,6 @@ onMounted(() => {
 .quote-backgrounds {
   height: 250px;
   width: 100vw;
-
   transition: all 0.3s ease;
   display: flex;
   position: relative;
@@ -56,10 +64,20 @@ onMounted(() => {
 }
 
 .background-video {
-  position: absolute;
+  position: fixed;
+  display: flex;
   top: 0;
   bottom: 0;
-  height: 250px;
+  z-index: -1;
+}
+.background-video::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
   z-index: -1;
 }
 
@@ -113,22 +131,12 @@ onMounted(() => {
     margin: 0 15px 50px 15px;
   }
 
-  .background-video {
-    height: 350px;
-  }
-
   .quote {
     padding: 0 20px 0 20px;
   }
 
   .quote.signature {
     padding: 0 60px 0 10px;
-  }
-}
-
-@media (min-width: 600px) {
-  .background-video {
-    height: 450px;
   }
 }
 
@@ -162,7 +170,7 @@ onMounted(() => {
 
   .background-video {
     height: 650px;
-    top: auto;
+    top: 70px;
     bottom: -220px;
   }
 }

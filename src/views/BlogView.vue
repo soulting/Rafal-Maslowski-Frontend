@@ -3,15 +3,8 @@
   <Selectors @changeCategory="changeCategory" />
   <Posts :category="category" />
   <Contact />
-  <section class="post-view-post-container-loader" v-if="showLoader">
-    <img src="@/assets/RM_logo.png" alt="Loading..." class="loading-image" />
-
-    <div class="dot-container">
-      <img class="dot" id="first" src="@/assets/icons/dot.png" alt="dot" />
-      <img class="dot" id="second" src="@/assets/icons/dot.png" alt="dot" />
-      <img class="dot" id="third" src="@/assets/icons/dot.png" alt="dot" />
-    </div>
-  </section>
+  <Loader :isVisible="showLoader" />
+  <Footer />
 </template>
 
 <script setup>
@@ -19,6 +12,8 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
 import Title from "@/views/BlogViewElements/Title.vue";
 import Selectors from "@/views/BlogViewElements/PostSelector.vue";
 import Posts from "@/views/BlogViewElements/Posts.vue";
+import Loader from "./SharedElements/Loader.vue";
+import Footer from "./SharedElements/Footer.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 
 const category = ref("WSZYSTKIE WPISY");

@@ -12,7 +12,9 @@
       <div class="tab-container">
         <router-link class="router-link" to="/blog">Blog </router-link>
         <router-link class="router-link" to="/about">O Mnie </router-link>
-        <router-link class="router-link" to="/about">Kontakt </router-link>
+        <router-link class="router-link" to="/contact-information"
+          >Kontakt
+        </router-link>
         <router-link class="router-link" to="/about">Kredyt </router-link>
         <router-link class="router-link" to="/about">Przydatne </router-link>
       </div>
@@ -28,9 +30,11 @@
     </nav>
     <transition name="dropdownmenuExpansion">
       <div v-if="menuOpen" class="dropdown-tabs">
-        <router-link class="router-link" to="/about">Blog </router-link>
+        <router-link class="router-link" to="//blog">Blog </router-link>
         <router-link class="router-link" to="/about">O Mnie </router-link>
-        <router-link class="router-link" to="/about">Kontakt </router-link>
+        <router-link class="router-link" to="/contact-information"
+          >Kontakt
+        </router-link>
         <router-link class="router-link" to="/about">Kredyt </router-link>
         <router-link class="router-link" to="/about">Przydatne </router-link>
       </div>

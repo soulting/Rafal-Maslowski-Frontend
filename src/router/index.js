@@ -31,6 +31,17 @@ const routes = [
     name: "post",
     component: () => import("../views/PostView.vue"),
   },
+
+  {
+    path: "/contact-information",
+    name: "contact-information",
+    component: () => import("../views/ContactInfoView.vue"),
+  },
+  {
+    path: "//privacy-policy",
+    name: "privacy-policy",
+    component: () => import("../views/PrivacyView.vue"),
+  },
 ];
 
 const router = createRouter({

@@ -2,7 +2,7 @@
   <section class="blog-view-content-container" id="target">
     <div class="video-container">
       <video
-        src="@/assets/video_backgrounds/7317309-uhd-3840-2160-25fps.mp4"
+        src="@/assets/video_backgrounds/Timeline 1.mp4"
         type="video/mp4"
         ref="videoElament"
         autoplay
@@ -41,7 +41,7 @@ onMounted(() => {
   const target = document.getElementById(`target`);
   observer.observe(target);
 
-  if (videoElament) {
+  if (videoElament.value) {
     videoElament.value.addEventListener("canplaythrough", () => {
       emit("videoLoaded");
     });

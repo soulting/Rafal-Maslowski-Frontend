@@ -129,8 +129,9 @@ const changeMissionExplanationSelectedMarker = (marker) => {
 .why-me {
   display: flex;
   flex-direction: column;
-  margin: 30px 0 50px 0;
+  padding: 30px 0 50px 0;
   width: 100vw;
+  background-color: white;
 }
 
 h2 {
