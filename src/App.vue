@@ -4,6 +4,7 @@
       class="navbar-img-shadow"
       src="@/assets/RM_logo.svg"
       alt="icon shadow"
+      @load="showSection"
     />
     <nav>
       <router-link to="/">
@@ -20,7 +21,7 @@
       </div>
       <button
         class="tab-hamburger-menu"
-        @click="openMenu()"
+        @click="changeMenu()"
         :class="{ 'open-menu': menuOpen }"
       >
         <span class="line-1"></span>
@@ -30,26 +31,45 @@
     </nav>
     <transition name="dropdownmenuExpansion">
       <div v-if="menuOpen" class="dropdown-tabs">
-        <router-link class="router-link" to="//blog">Blog </router-link>
-        <router-link class="router-link" to="/about">O Mnie </router-link>
-        <router-link class="router-link" to="/contact-information"
+        <router-link @click="changeMenu()" class="router-link" to="/blog"
+          >Blog
+        </router-link>
+        <router-link @click="changeMenu()" class="router-link" to="/about"
+          >O Mnie
+        </router-link>
+        <router-link
+          @click="changeMenu()"
+          class="router-link"
+          to="/contact-information"
           >Kontakt
         </router-link>
-        <router-link class="router-link" to="/about">Kredyt </router-link>
-        <router-link class="router-link" to="/about">Przydatne </router-link>
+        <router-link @click="changeMenu()" class="router-link" to="/about"
+          >Kredyt
+        </router-link>
+        <router-link @click="changeMenu()" class="router-link" to="/about"
+          >Przydatne
+        </router-link>
       </div>
     </transition>
 
     <router-view />
   </main>
+  <Loader class="home-view-loader" :isVisible="showLoader" />
 </template>
 
 <script setup>
+import Loader from "@/views/SharedElements/Loader.vue";
 import { onMounted, ref } from "vue";
 
 const menuOpen = ref(false);
 
-const openMenu = () => {
+const showLoader = ref(true);
+
+const showSection = () => {
+  showLoader.value = false;
+};
+
+const changeMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 </script>
@@ -193,6 +213,11 @@ nav {
   box-sizing: border-box;
   font-size: 20px;
   font-weight: 300;
+}
+
+.home-view-loader {
+  position: absolute;
+  z-index: 10;
 }
 
 .dropdownmenuExpansion-enter-from,

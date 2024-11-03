@@ -1,8 +1,11 @@
 export const getBlogPosts = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:5000/getBlogPosts", {
-      method: "GET",
-    });
+    const response = await fetch(
+      "https://rafal-maslowski-backend-4.onrender.com/getBlogPosts",
+      {
+        method: "GET",
+      }
+    );
     if (!response.ok) {
       throw new Error("Could't fetch the posts");
     }
@@ -12,4 +15,3 @@ export const getBlogPosts = async () => {
     return null;
   }
 };
-
