@@ -1,0 +1,22 @@
+[33m54ddab30[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~5
+[33m186a8e30[m HEAD@{1}: commit: created fotter section and contact view and added large file tracker
+[33m80fd5411[m HEAD@{2}: commit: created fotter section and contact view
+[33m13bc67d8[m HEAD@{3}: commit: Finished the contact section, and remade the quote section, so it displayes videos
+[33m76f9e070[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{4}: commit: Added functional to contact section
+[33m15d70a79[m HEAD@{5}: commit: post view edit
+[33m54ddab30[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{6}: commit: Prepared for web server
+[33m4721f9d3[m HEAD@{7}: commit: Added a loader background to the Blog view
+[33me730ccd0[m HEAD@{8}: commit: loading a post from the store and not downloading every singleone of them seperatly
+[33ma4dc87de[m HEAD@{9}: commit: reajusted the blog element to be used in all instances
+[33mb17748ff[m HEAD@{10}: commit: handling size changes for small view
+[33m45d1d4f5[m HEAD@{11}: commit: Added pinia and small post vue
+[33m005dd11f[m HEAD@{12}: commit: selector and new background in title vue added
+[33mcf3660c7[m HEAD@{13}: commit: added blog view elements
+[33m35335ad8[m HEAD@{14}: commit: Added post manager
+[33m5521d0c1[m HEAD@{15}: commit: added lazy loading
+[33m1b9336de[m HEAD@{16}: commit: adding regex for email checking
+[33mc520a3f1[m HEAD@{17}: commit: Added bank selected images and a paralax effect for the background in the opinion section
+[33m8846862d[m HEAD@{18}: commit: Changed the media queries, so that the components look better at diffrent sizes
+[33mfb0141a0[m HEAD@{19}: commit: Added opinion element and changed the styles for small devices
+[33m6b37da36[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{20}: checkout: moving from master to main
+[33m6b37da36[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{21}: commit (initial): initial commit
