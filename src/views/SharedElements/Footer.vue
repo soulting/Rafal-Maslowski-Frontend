@@ -5,7 +5,7 @@
         <h3>Kontakt</h3>
         <p>
           Email:
-          <a class="info-link" href="rafal.maslowski@phinance.pl"
+          <a class="info-link" href="mailto:rafal.maslowski@phinance.pl"
             >rafal.maslowski@phinance.pl</a
           >
         </p>

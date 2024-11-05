@@ -1,5 +1,5 @@
 <template>
-  <Title @videoLoaded="showSection" />
+  <Title @videoLoaded="videoIsLoaded = true" />
   <Selectors @changeCategory="changeCategory" />
   <Posts :category="category" />
   <Contact />
@@ -14,18 +14,22 @@ import Selectors from "@/views/BlogViewElements/PostSelector.vue";
 import Posts from "@/views/BlogViewElements/Posts.vue";
 import Loader from "./SharedElements/Loader.vue";
 import Footer from "./SharedElements/Footer.vue";
-import { onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { usePosts } from "@/stores/posts";
+
+const posts = usePosts();
 
 const category = ref("WSZYSTKIE WPISY");
 
-const showLoader = ref(true);
+const showLoader = computed(() => {
+  if (!posts.isLoading && videoIsLoaded.value) {
+    return false;
+  } else return true;
+});
+const videoIsLoaded = ref(false);
 
 const changeCategory = (item) => {
   category.value = item;
-};
-
-const showSection = () => {
-  showLoader.value = false;
 };
 
 onMounted(() => {

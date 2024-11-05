@@ -1,39 +1,59 @@
 <template>
-  <section class="contact-section">
+  <section class="contact-section" id="contact-element-observe-target">
     <img
       src="@/assets/backgrounds/pexels-photos-by-rugeen-67119324-16028559.jpg"
       alt="background image"
     />
-    <div class="inner-content-section">
-      <h2>Kontakt</h2>
-      <p>Skontaktuj się ze mną, a odpowiem jak najszybciej.</p>
-      <div class="contact-info">
-        <h3>Moje dane kontaktowe:</h3>
-        <p>
-          Email:
-          <a href="mailto:example@example.com">rafal.maslowski@phinance.pl</a>
-        </p>
-        <p>Telefon: <a href="tel:+48737327636">+48 737 327 636</a></p>
-        <p>
-          Facebook:
-          <a
-            href="https://www.facebook.com/profile.php?id=100003326232034"
-            target="_blank"
-            >Rafał Masłowski</a
-          >
-        </p>
-        <p>
-          Adres:
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Stanisława+Żółkiewskiego+5/5,+87-100+Toruń"
-            target="_blank"
-            >Stanisława Żółkiewskiego 5/5, 87-100 Toruń</a
-          >
-        </p>
+
+    <transition name="contactElement">
+      <div v-if="showElement" id="element0" class="inner-content-section">
+        <h2>Kontakt</h2>
+        <p>Skontaktuj się ze mną, a odpowiem jak najszybciej.</p>
+        <div class="contact-info">
+          <h3>Moje dane kontaktowe:</h3>
+          <p>
+            Email:
+            <a href="mailto:rafal.maslowski@phinance.pl"
+              >rafal.maslowski@phinance.pl</a
+            >
+          </p>
+          <p>Telefon: <a href="tel:+48737327636">+48 737 327 636</a></p>
+          <p>
+            Facebook:
+            <a
+              href="https://www.facebook.com/profile.php?id=100003326232034"
+              target="_blank"
+              >Rafał Masłowski</a
+            >
+          </p>
+          <p>
+            Adres:
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Stanisława+Żółkiewskiego+5/5,+87-100+Toruń"
+              target="_blank"
+              >Stanisława Żółkiewskiego 5/5, 87-100 Toruń</a
+            >
+          </p>
+        </div>
       </div>
-    </div>
+    </transition>
   </section>
-  <div class="separator"></div>
+
+  <div class="separator">
+    <transition name="contactElement">
+      <p v-if="showElement" id="element1">
+        „Masz pytania lub problemy związane z kredytem? Skontaktuj się ze mną —
+        pomogę Ci przejść przez zawiłości finansowe, znajdę najlepsze
+        rozwiązania i wyjaśnię każdy szczegół. Razem znajdziemy drogę do
+        bezpiecznych decyzji finansowych.”
+      </p></transition
+    >
+    <transition name="contactElement">
+      <p v-if="showElement" id="element1" class="autograf">
+        Rafał Masłowski
+      </p></transition
+    >
+  </div>
   <Contact />
   <Footer />
 </template>
@@ -42,13 +62,28 @@
 import Contact from "./HomeViewElements/Contact.vue";
 import Loader from "./SharedElements/Loader.vue";
 import Footer from "./SharedElements/Footer.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const showLoader = ref(true);
+const showElement = ref(false);
 
 const showSection = () => {
   showLoader.value = false;
 };
+let observer = null;
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        showElement.value = true;
+      }
+    });
+  });
+
+  const target = document.getElementById("contact-element-observe-target");
+  if (target) observer.observe(target);
+});
 </script>
 
 <style scoped>
@@ -56,28 +91,46 @@ const showSection = () => {
   color: white;
   margin-top: 70px;
   position: relative;
-  height: 500px;
+  height: 550px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 0 100px;
+  align-items: center;
+  padding: 0 25px;
 }
 
 .separator {
-  height: 100px;
+  height: 400px;
   width: 100%;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.autograf {
+  padding-left: 35%;
+}
+
+.separator p {
+  max-width: 60%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 20px;
+  font-style: italic;
 }
 
 .inner-content-section {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 8px;
-
   margin-top: 50px;
-  width: 50%;
+  /* width: 50%; */
   height: 400px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px 20px 40px 20px;
 }
 .contact-section img {
   position: fixed;
@@ -89,16 +142,17 @@ const showSection = () => {
 }
 
 h2 {
-  font-size: 1.8em;
+  font-size: 35px;
   margin-bottom: 10px;
 }
 
 p {
-  line-height: 1.5;
+  font-size: 20px;
+  line-height: 1.1;
 }
 
 .contact-info {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .contact-info h3 {
@@ -112,5 +166,58 @@ p {
 
 .contact-info a:hover {
   text-decoration: underline;
+}
+
+#element0.contactElement-enter-active {
+  transition-delay: 0.25s;
+}
+#element1.contactElement-enter-active {
+  transition-delay: 0.75s;
+}
+
+.contactElement-enter-from,
+.contactElement-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.contactElement-enter-active,
+.contactElement-leave-active {
+  transition: all 1s ease;
+}
+
+@media (min-width: 768px) {
+  .contact-section {
+    align-items: flex-start;
+    padding: 0 35px;
+  }
+
+  .separator {
+    height: 350px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .contact-section {
+    padding: 0 50px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .contact-section {
+    padding: 0 75px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .contact-section {
+    padding: 0 100px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .contact-section {
+    padding: 0 125px;
+  }
 }
 </style>

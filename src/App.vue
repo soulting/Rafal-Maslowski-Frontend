@@ -6,7 +6,7 @@
       alt="icon shadow"
       @load="showSection"
     />
-    <nav>
+    <nav :style="{ visibility: showLoader ? 'hidden' : 'visible' }">
       <router-link to="/">
         <img class="navbar-img" src="@/assets/RM_logo.svg" alt="icon image" />
       </router-link>
@@ -16,8 +16,8 @@
         <router-link class="router-link" to="/contact-information"
           >Kontakt
         </router-link>
-        <router-link class="router-link" to="/about">Kredyt </router-link>
-        <router-link class="router-link" to="/about">Przydatne </router-link>
+        <!-- <router-link class="router-link" to="/about">Kredyt </router-link>
+        <router-link class="router-link" to="/about">Przydatne </router-link> -->
       </div>
       <button
         class="tab-hamburger-menu"
@@ -43,12 +43,12 @@
           to="/contact-information"
           >Kontakt
         </router-link>
-        <router-link @click="changeMenu()" class="router-link" to="/about"
+        <!-- <router-link @click="changeMenu()" class="router-link" to="/about"
           >Kredyt
         </router-link>
         <router-link @click="changeMenu()" class="router-link" to="/about"
           >Przydatne
-        </router-link>
+        </router-link> -->
       </div>
     </transition>
 
