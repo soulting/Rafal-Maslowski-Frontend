@@ -1,7 +1,7 @@
 export const getBlogPosts = async () => {
   try {
     const response = await fetch(
-      "https://rafal-maslowski-backend-4.onrender.com/getBlogPosts",
+      "http://127.0.0.1:5000/getBlogPosts",
       {
         method: "GET",
       }

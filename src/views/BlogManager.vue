@@ -1,15 +1,30 @@
 <template class>
   <div class="blog-manager">
-    <div v-if="!postsHeaders.isLoading" class="post-list">
-      <div
-        v-for="(post, index) in postsHeaders.posts"
-        :key="index"
-        class="post-item"
-      >
+    <div v-if="!posts.isLoading" class="post-list">
+      <div v-for="(post, index) in posts.posts" :key="index" class="post-item">
         <img class="post-image" :src="post.image" alt="post image" />
         <div class="post-body">
           <h4 class="post-title">{{ post.title }}</h4>
           <p class="post-description">{{ post.description }}</p>
+        </div>
+        <div class="post-control-buttons">
+          <img
+            v-if="post.isActiv === 'TRUE'"
+            @click="activatePost(post.id)"
+            src="@/assets/icons/switch-on.png"
+            alt="activ icon"
+          />
+          <img
+            v-else
+            @click="activatePost(post.id)"
+            src="@/assets/icons/switch-off.png"
+            alt="inactiv icon"
+          />
+          <img
+            class="edit-button"
+            src="@/assets/icons/pen.png"
+            alt="edit button"
+          />
         </div>
       </div>
     </div>
@@ -99,13 +114,12 @@ import { onMounted, ref } from "vue";
 import { getBlogPosts } from "@/composables/getBlogPosts.js";
 import { useRouter } from "vue-router";
 import { postBlogPost } from "@/composables/postBlogPost.js";
+import { usePosts } from "@/stores/posts";
+import { activateBlogPost } from "@/composables/activateBlogPost.js";
 
 const router = useRouter();
 
-const postsHeaders = ref({
-  isLoading: true,
-  posts: [],
-});
+const posts = usePosts();
 
 const postData = ref({
   title: null,
@@ -113,14 +127,32 @@ const postData = ref({
   image: null,
   code: null,
   category: null,
+  isActive: false,
 });
 
 const showNewPost = ref(false);
 
 const editorInstance = ref(null);
 
+const activatePost = async (postID) => {
+  try {
+    const response = await activateBlogPost(postID);
+
+    if (response.message === "Post status changed successfully") {
+      posts.getPosts();
+      console.log("Posts reloaded successfully");
+    } else {
+      console.error("Failed to activate post");
+    }
+  } catch (error) {
+    console.error("Error activating post:", error);
+  }
+};
+
 onMounted(() => {
-  getBlogPosts(postsHeaders);
+  if (posts.isLoading) {
+    posts.getPosts();
+  }
 });
 
 const onEditorInit = (evt) => {
@@ -164,6 +196,22 @@ const switchEditor = () => {
 </script>
 
 <style scoped>
+.post-control-buttons img {
+  height: 50px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.post-control-buttons .edit-button {
+  height: 40px;
+}
+
+.post-control-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .blog-manager {
   padding-top: 130px;
   background-color: rgb(245, 245, 245);

@@ -4,12 +4,7 @@
       <h2 v-if="showElement[0]">Banki, z którymi współpracuję</h2>
     </transition>
     <div class="grid-container">
-      <div
-        class="bank"
-        v-for="(bank, index) in banks"
-        :key="index"
-        @click="goToBank(bank.link)"
-      >
+      <div class="bank" v-for="(bank, index) in banks" :key="index">
         <transition name="bankElement">
           <img
             v-if="showElement[index]"

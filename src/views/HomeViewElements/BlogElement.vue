@@ -6,8 +6,8 @@
     <div class="posts-container">
       <div v-for="(id, index) in 3" :key="index" class="post-container">
         <BlogElement
-          v-if="!posts.isLoading"
-          :post="posts.posts[id - 1]"
+          v-if="filteredPosts"
+          :post="filteredPosts[index]"
           :homePage="true"
         />
         <BlogElementSceleton v-else />
@@ -27,8 +27,8 @@
       >
         <BlogElement
           class="abc"
-          v-if="!posts.isLoading"
-          :post="posts.posts[id - 1]"
+          v-if="filteredPosts"
+          :post="filteredPosts[index]"
         />
         <BlogElementSceleton v-else />
       </slide>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import BlogElement from "@/components/BlogElementCarouselItem.vue";
@@ -52,6 +52,18 @@ import { useRoute, useRouter } from "vue-router";
 import { usePosts } from "@/stores/posts";
 
 const posts = usePosts();
+
+const filteredPosts = computed(() => {
+  const computedPostList = [];
+  if (posts.posts) {
+    for (let i = 0; i < posts.posts.length; i++) {
+      if (posts.posts[i].isActiv === "TRUE") {
+        computedPostList.push(posts.posts[i]);
+      }
+    }
+    return computedPostList;
+  } else return null;
+});
 
 const router = useRouter();
 
