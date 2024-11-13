@@ -12,6 +12,6 @@ export const postBlogPost = async (postData) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };

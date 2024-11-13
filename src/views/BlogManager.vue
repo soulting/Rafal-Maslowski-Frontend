@@ -22,6 +22,7 @@
           />
           <img
             class="edit-button"
+            @click="editPost(post)"
             src="@/assets/icons/pen.png"
             alt="edit button"
           />
@@ -46,8 +47,8 @@
         </div>
       </div>
     </div>
-    <button @click="switchEditor" class="write-post">NAPISZ POST</button>
-    <div v-if="showNewPost" class="new-post-container">
+    <button @click="writePost" class="write-post">NAPISZ POST</button>
+    <div v-show="showNewPost" class="new-post-container">
       <input
         v-model="postData.title"
         class="new-post-title"
@@ -101,26 +102,32 @@
         />
       </div>
       <div class="new-post-controls">
-        <button class="commit-post" @click="getPostContent">ZAPISZ</button>
-        <button class="cancle-post" @click="switchEditor">ANULUJ</button>
+        <button v-if="currentEditID" class="cancle-post" @click="updatePost">
+          EDIT
+        </button>
+        <button v-else class="commit-post" @click="getPostContent">
+          ZAPISZ
+        </button>
+
+        <button class="cancle-post" @click="canclePost">ANULUJ</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import Editor from "@tinymce/tinymce-vue";
-import { onMounted, ref } from "vue";
-import { getBlogPosts } from "@/composables/getBlogPosts.js";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import Editor from "@tinymce/tinymce-vue";
+
+import { getBlogPosts } from "@/composables/getBlogPosts.js";
 import { postBlogPost } from "@/composables/postBlogPost.js";
-import { usePosts } from "@/stores/posts";
 import { activateBlogPost } from "@/composables/activateBlogPost.js";
+import { editBlogPost } from "@/composables/editBlogPost.js";
+import { usePosts } from "@/stores/posts";
 
-const router = useRouter();
-
+// Reactive references
 const posts = usePosts();
-
 const postData = ref({
   title: null,
   description: null,
@@ -130,14 +137,46 @@ const postData = ref({
   isActive: false,
 });
 
+const currentEditID = ref(null);
 const showNewPost = ref(false);
-
 const editorInstance = ref(null);
 
+const canclePost = () => {
+  currentEditID.value = null;
+
+  postData.value.title = null;
+  postData.value.description = null;
+  postData.value.image = null;
+  postData.value.code = null;
+  postData.value.category = null;
+  postData.value.isActive = false;
+
+  editorInstance.value.setContent("");
+
+  showNewPost.value = false;
+};
+
+const writePost = () => {
+  if (showNewPost.value) {
+    if (currentEditID.value) {
+      currentEditID.value = null;
+
+      postData.value.title = null;
+      postData.value.description = null;
+      postData.value.image = null;
+      postData.value.code = null;
+      postData.value.category = null;
+      postData.value.isActive = false;
+
+      editorInstance.value.setContent("");
+    }
+  } else showNewPost.value = true;
+};
+
+// Methods for post actions
 const activatePost = async (postID) => {
   try {
     const response = await activateBlogPost(postID);
-
     if (response.message === "Post status changed successfully") {
       posts.getPosts();
       console.log("Posts reloaded successfully");
@@ -149,17 +188,22 @@ const activatePost = async (postID) => {
   }
 };
 
-onMounted(() => {
-  if (posts.isLoading) {
-    posts.getPosts();
+const updatePost = async (postID) => {
+  try {
+    const response = await editBlogPost(currentEditID.value, postData.value);
+    if (response.message === "Post updated successfully") {
+      posts.getPosts();
+      console.log("Posts reloaded successfully");
+      canclePost();
+    } else {
+      console.error("Failed to update post");
+    }
+  } catch (error) {
+    console.error("Error updating post:", error);
   }
-});
-
-const onEditorInit = (evt) => {
-  editorInstance.value = evt.target;
 };
 
-const getPostContent = () => {
+const getPostContent = async () => {
   try {
     postData.value.code = editorInstance.value.getBody().outerHTML;
   } catch (error) {
@@ -176,42 +220,49 @@ const getPostContent = () => {
     alert("Uzupełnij wszystkie pola");
     return;
   } else {
-    postBlogPost(postData.value);
-    location.reload(true);
+    try {
+      const response = await postBlogPost(postData.value);
+      if (response.message === "The post was added successfully") {
+        posts.getPosts();
+        console.log("Posts got added successfully");
+        canclePost();
+      } else {
+        console.error("Failed to add post");
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
   }
 };
 
-const showPrew = () => {
-  try {
-    sessionStorage.setItem("content", content.value);
-    window.open("/preview", "_blank");
-  } catch (error) {
-    console.error(error);
-  }
+// Editor methods
+const onEditorInit = (evt) => {
+  editorInstance.value = evt.target;
 };
 
-const switchEditor = () => {
-  showNewPost.value = !showNewPost.value;
+// Edit post method
+const editPost = (post) => {
+  if (!showNewPost.value) {
+    showNewPost.value = true;
+  }
+  currentEditID.value = post.id;
+  postData.value.title = post.title;
+  postData.value.description = post.description;
+  postData.value.image = post.image;
+  postData.value.category = post.category;
+  postData.value.isActive = post.isActive;
+  editorInstance.value.setContent(`${post.code}`);
 };
+
+// Lifecycle hooks
+onMounted(() => {
+  if (posts.isLoading) {
+    posts.getPosts();
+  }
+});
 </script>
 
 <style scoped>
-.post-control-buttons img {
-  height: 50px;
-  margin: 10px;
-  cursor: pointer;
-}
-
-.post-control-buttons .edit-button {
-  height: 40px;
-}
-
-.post-control-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 .blog-manager {
   padding-top: 130px;
   background-color: rgb(245, 245, 245);
@@ -220,6 +271,7 @@ const switchEditor = () => {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding-bottom: 50px;
 }
 
 .post-list {
@@ -291,7 +343,6 @@ const switchEditor = () => {
   padding-left: 20px;
   border-radius: 5px;
   border: solid black 0.5px;
-  /* margin-top: 200px; */
   margin-bottom: 30px;
   width: 800px;
 }
@@ -349,9 +400,27 @@ const switchEditor = () => {
   color: white;
   background: rgb(0, 0, 0);
 }
+
 .cancle-post:hover {
   color: white;
   background: rgb(255, 38, 38);
   border-color: rgb(255, 38, 38);
+}
+
+.post-control-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-control-buttons img {
+  height: 50px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.post-control-buttons .edit-button {
+  height: 40px;
 }
 </style>
