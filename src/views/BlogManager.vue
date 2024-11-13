@@ -10,6 +10,7 @@
         <div class="post-control-buttons">
           <img
             v-if="post.isActiv === 'TRUE'"
+            c
             @click="activatePost(post.id)"
             src="@/assets/icons/switch-on.png"
             alt="activ icon"
@@ -24,6 +25,13 @@
             class="edit-button"
             @click="editPost(post)"
             src="@/assets/icons/pen.png"
+            alt="edit button"
+          />
+
+          <img
+            class="edit-button"
+            @click="goTo(post.id)"
+            src="@/assets/icons/file.png"
             alt="edit button"
           />
         </div>
@@ -126,6 +134,8 @@ import { activateBlogPost } from "@/composables/activateBlogPost.js";
 import { editBlogPost } from "@/composables/editBlogPost.js";
 import { usePosts } from "@/stores/posts";
 
+const router = useRouter();
+
 // Reactive references
 const posts = usePosts();
 const postData = ref({
@@ -140,6 +150,10 @@ const postData = ref({
 const currentEditID = ref(null);
 const showNewPost = ref(false);
 const editorInstance = ref(null);
+
+const goTo = (postId) => {
+  router.push({ name: "post", query: { id: postId } });
+};
 
 const canclePost = () => {
   currentEditID.value = null;
@@ -415,12 +429,12 @@ onMounted(() => {
 }
 
 .post-control-buttons img {
-  height: 50px;
-  margin: 10px;
+  height: 35px;
+  margin: 7px;
   cursor: pointer;
 }
 
 .post-control-buttons .edit-button {
-  height: 40px;
+  height: 35px;
 }
 </style>
