@@ -1,7 +1,7 @@
 <template>
   <section class="contact-section" id="contact-element-observe-target">
     <img
-      src="@/assets/backgrounds/pexels-photos-by-rugeen-67119324-16028559.jpg"
+      src="@/assets/backgrounds/matthew-henry-VviFtDJakYk-unsplash.jpg"
       alt="background image"
     />
 
