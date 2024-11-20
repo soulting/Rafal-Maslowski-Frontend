@@ -5,7 +5,7 @@
         src="@/assets/backgrounds/kevin-rajaram-ULwzqOnPem0-unsplash.jpg"
         alt="background-image"
       />
-      <h1>Rafał Masłowski</h1>
+      <div class="name-container"><h1>Rafał Masłowski</h1></div>
     </div>
     <div class="about-main-section">
       <div class="description-section">
@@ -19,7 +19,10 @@
         </p>
         <button>Skontaktuj się</button>
       </div>
-      <img src="" alt="profile picture" />
+      <img
+        src="@/assets/backgrounds/428523336_7659326927521439_9053629739761281834_n.jpg"
+        alt="profile picture"
+      />
     </div>
   </section>
   <Contact /><Footer />
@@ -45,7 +48,7 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
 }
 
 .upper-image-container img {
-  height: 300px;
+  width: 450px;
   position: absolute;
   left: 0;
   right: 0;
@@ -57,10 +60,44 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
   padding: 20px;
   font-style: italic;
   line-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-main-section img {
+  width: 100%;
+  border-radius: 5px;
+  display: none;
+}
+
+.name-container {
+  height: 100px;
+  width: 300px;
+  position: absolute;
+  background-color: rgba(19, 19, 19, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  bottom: 20px;
+  z-index: 5;
+  transform: translateX(-50%);
+}
+
+.name-container h1 {
+  color: white;
+  font-size: 30px;
+  margin: 0;
 }
 
 .description-section {
   text-align: justify;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .description-section button {
@@ -77,6 +114,7 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
   color: #2c3e50;
   transition: all 1s ease;
   margin-top: 30px;
+  margin-bottom: 30px;
   cursor: pointer;
 }
 
@@ -84,5 +122,132 @@ import Contact from "@/views/HomeViewElements/Contact.vue";
   font-size: 18px;
   background-color: #2c3e50;
   color: #ffffff;
+}
+
+@media (min-width: 450px) {
+  .upper-image-container {
+    height: 250px;
+  }
+
+  .upper-image-container img {
+    width: 650px;
+    bottom: -75px;
+  }
+
+  .about-main-section {
+    padding: 30px;
+  }
+}
+
+@media (min-width: 650px) {
+  .upper-image-container {
+    height: 300px;
+  }
+
+  .upper-image-container img {
+    width: 768px;
+    bottom: -100px;
+  }
+
+  .about-main-section {
+    padding: 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  .name-container {
+    height: 100px;
+    width: 400px;
+  }
+  .upper-image-container img {
+    width: 950px;
+    bottom: -110px;
+  }
+
+  .about-main-section img {
+    display: block;
+    flex: 1;
+    max-width: 450px;
+  }
+
+  .about-main-section {
+    padding-top: 75px;
+    padding-bottom: 75px;
+    gap: 30px;
+  }
+
+  .description-section {
+    flex: 1;
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 950px) {
+  .upper-image-container img {
+    width: 1200px;
+    bottom: -250px;
+  }
+  .about-main-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    gap: 45px;
+  }
+
+  .name-container {
+    height: 120px;
+    width: 500px;
+  }
+
+  .name-container h1 {
+    font-size: 35px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .upper-image-container {
+    height: 350px;
+  }
+  .upper-image-container img {
+    width: 1400px;
+    bottom: -350px;
+  }
+  .about-main-section {
+    gap: 65px;
+    padding-top: 150px;
+    padding-bottom: 150px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .upper-image-container {
+    height: 400px;
+  }
+  .upper-image-container img {
+    width: 1600px;
+    bottom: -365px;
+  }
+  .about-main-section {
+    gap: 85px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .upper-image-container {
+    height: 400px;
+  }
+  .upper-image-container img {
+    width: 1800px;
+    bottom: -450px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .upper-image-container {
+    height: 450px;
+  }
+  .upper-image-container img {
+    width: 2000px;
+    bottom: -450px;
+  }
 }
 </style>
