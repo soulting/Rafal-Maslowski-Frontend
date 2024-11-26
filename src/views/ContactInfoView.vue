@@ -41,19 +41,19 @@
 
   <div class="separator">
     <transition name="contactElement">
-      <p v-if="showElement" id="element1">
-        „Masz pytania lub problemy związane z kredytem? Skontaktuj się ze mną —
-        pomogę Ci przejść przez zawiłości finansowe, znajdę najlepsze
-        rozwiązania i wyjaśnię każdy szczegół. Razem znajdziemy drogę do
-        bezpiecznych decyzji finansowych.”
-      </p></transition
-    >
-    <transition name="contactElement">
-      <p v-if="showElement" id="element1" class="autograf">
-        Rafał Masłowski
-      </p></transition
+      <div class="quote-container" v-if="showElement" id="element1">
+        <p>
+          „Masz pytania lub problemy związane z kredytem? Skontaktuj się ze mną
+          — pomogę Ci przejść przez zawiłości finansowe, znajdę najlepsze
+          rozwiązania i wyjaśnię każdy szczegół. Razem znajdziemy drogę do
+          bezpiecznych decyzji finansowych.”
+        </p>
+
+        <p v-if="showElement" class="autograf">Rafał Masłowski</p>
+      </div></transition
     >
   </div>
+
   <Contact />
   <Footer />
 </template>
@@ -64,15 +64,12 @@ import Loader from "./SharedElements/Loader.vue";
 import Footer from "./SharedElements/Footer.vue";
 import { ref, onMounted } from "vue";
 
-const showLoader = ref(true);
 const showElement = ref(false);
 
-const showSection = () => {
-  showLoader.value = false;
-};
 let observer = null;
 
 onMounted(() => {
+  window.scroll(0, 0);
   observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -98,6 +95,13 @@ onMounted(() => {
   padding: 0 25px;
 }
 
+.quote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
 .separator {
   height: 400px;
   width: 100%;
@@ -113,7 +117,7 @@ onMounted(() => {
 }
 
 .separator p {
-  max-width: 60%;
+  max-width: 100%;
   text-align: center;
   line-height: 24px;
   font-size: 20px;
@@ -134,11 +138,10 @@ onMounted(() => {
 }
 .contact-section img {
   position: fixed;
-  width: 100vw;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: -1;
+  height: 100%;
+  object-position: center;
 }
 
 h2 {
@@ -195,11 +198,29 @@ p {
   .separator {
     height: 350px;
   }
+
+  .separator p {
+    max-width: 80%;
+  }
+
+  .contact-section img {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+    height: auto;
+    width: 100%;
+    left: 0;
+    right: 0;
+    object-position: center;
+  }
 }
 
 @media (min-width: 1000px) {
   .contact-section {
     padding: 0 50px;
+  }
+  .separator p {
+    max-width: 70%;
   }
 }
 
@@ -212,6 +233,9 @@ p {
 @media (min-width: 1200px) {
   .contact-section {
     padding: 0 100px;
+  }
+  .separator p {
+    max-width: 60%;
   }
 }
 

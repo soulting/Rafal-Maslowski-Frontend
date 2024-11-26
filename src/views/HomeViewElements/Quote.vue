@@ -1,14 +1,21 @@
 <template>
   <section class="quote-backgrounds" id="quote-observe-target">
-    <video
-      class="background-video"
-      src="@/assets/video_backgrounds/Timeline 2.mp4"
-      type="video/mp4"
-      autoplay
-      loop
-      muted
-      ref="videoElamentHome"
-    ></video>
+    <video class="background-video" autoplay loop muted ref="videoElamentHome">
+      <source
+        src="@/assets/video_backgrounds/HomeViewVideos/Timeline 3 3840x2160.mp4"
+        type="video/mp4"
+        media="(min-width: 2160px)"
+      />
+      <source
+        src="@/assets/video_backgrounds/HomeViewVideos/Timeline 3 1920x1080.mp4"
+        type="video/mp4"
+        media="(min-width: 1080px)"
+      />
+      <source
+        src="@/assets/video_backgrounds/HomeViewVideos/Timeline 3 1280x720.mp4"
+        type="video/mp4"
+      />
+    </video>
     <transition name="quotesTransition">
       <div v-show="showQuotes" class="quotes-container">
         <p class="quote">
