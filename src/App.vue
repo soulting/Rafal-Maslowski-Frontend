@@ -13,11 +13,9 @@
       <div class="tab-container">
         <router-link class="router-link" to="/blog">Blog </router-link>
         <router-link class="router-link" to="/about">O Mnie </router-link>
-        <router-link class="router-link" to="/contact-information"
+        <router-link class="router-link" to="/contactinformation"
           >Kontakt
         </router-link>
-        <!-- <router-link class="router-link" to="/about">Kredyt </router-link>
-        <router-link class="router-link" to="/about">Przydatne </router-link> -->
       </div>
       <button
         class="tab-hamburger-menu"
@@ -43,12 +41,6 @@
           to="/contact-information"
           >Kontakt
         </router-link>
-        <!-- <router-link @click="changeMenu()" class="router-link" to="/about"
-          >Kredyt
-        </router-link>
-        <router-link @click="changeMenu()" class="router-link" to="/about"
-          >Przydatne
-        </router-link> -->
       </div>
     </transition>
 

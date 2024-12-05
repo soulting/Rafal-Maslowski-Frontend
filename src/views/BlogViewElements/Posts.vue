@@ -35,7 +35,7 @@
 <script setup>
 import { usePosts } from "@/stores/posts";
 import { computed, onMounted } from "vue";
-import BlogElement from "@/components/BlogElementCarouselItem.vue";
+import BlogElement from "@/components/BlogElement.vue";
 
 const props = defineProps({
   category: String,

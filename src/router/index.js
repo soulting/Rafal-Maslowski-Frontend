@@ -12,7 +12,7 @@ const routes = [
     component: () => import("../views/AboutView.vue"),
   },
   {
-    path: "/r9W6IMlfjLrzVAUEl7bHLQMFALsbAIqJ",
+    path: "/blogmanager",
     name: "blogManager",
     component: () => import("../views/BlogManager.vue"),
   },
@@ -33,8 +33,8 @@ const routes = [
   },
 
   {
-    path: "/contact-information",
-    name: "contact-information",
+    path: "/contactinformation",
+    name: "contactinformation",
     component: () => import("../views/ContactInfoView.vue"),
   },
   {

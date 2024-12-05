@@ -8,8 +8,9 @@ export const usePosts = defineStore("posts", {
   actions: {
     async getPosts() {
       const posts = await getBlogPosts();
-      if (posts) {
-        this.posts = posts;
+      console.log(posts);
+      if (posts.status === "success") {
+        this.posts = posts.data;
       }
       this.isLoading = false;
     },

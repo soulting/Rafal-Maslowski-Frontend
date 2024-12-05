@@ -24,7 +24,7 @@
             wiedzą, staram się też przybliżyć dobre praktyki eksperta
             kredytowego.
           </p>
-          <button>Skontaktuj się</button>
+          <button @click="goTo">Skontaktuj się</button>
         </div>
       </transition>
       <transition name="aboutElement">
@@ -43,9 +43,16 @@
 import Footer from "./SharedElements/Footer.vue";
 import Contact from "@/views/HomeViewElements/Contact.vue";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const showElement = ref(false);
 let observer = null;
+
+const goTo = () => {
+  router.push("/contactinformation");
+};
 
 onMounted(() => {
   window.scroll(0, 0);

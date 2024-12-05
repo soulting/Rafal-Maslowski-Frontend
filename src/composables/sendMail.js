@@ -1,4 +1,5 @@
 export const sendMail = async (mailData) => {
+  let errorResponse;
   try {
     const response = await fetch("http://127.0.0.1:5000/sendMail", {
       method: "POST",
@@ -14,5 +15,6 @@ export const sendMail = async (mailData) => {
     return data;
   } catch (error) {
     console.error(error);
+    return errorResponse;
   }
 };

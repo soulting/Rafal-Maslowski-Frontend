@@ -1,4 +1,19 @@
 <template class>
+  <div v-if="showLogin" class="login">
+    <p>login</p>
+    <input v-model="username" class="username" type="text" />
+    <p>hasło</p>
+    <input v-model="password" class="passwoe" type="password" />
+    <button @click="loginUser">zaloguj</button>
+  </div>
+
+  <transition name="popupMessage">
+    <div v-if="showMessage" class="popup-message">
+      <h3>{{ popupTitle }}</h3>
+      <p>{{ popupDescription }}</p>
+    </div>
+  </transition>
+
   <div class="blog-manager">
     <div v-if="!posts.isLoading" class="post-list">
       <div v-for="(post, index) in posts.posts" :key="index" class="post-item">
@@ -133,6 +148,10 @@ import { postBlogPost } from "@/composables/postBlogPost.js";
 import { activateBlogPost } from "@/composables/activateBlogPost.js";
 import { editBlogPost } from "@/composables/editBlogPost.js";
 import { usePosts } from "@/stores/posts";
+import Cookies from "js-cookie";
+import { login } from "@/composables/login.js";
+
+import { jwtDecode } from "jwt-decode";
 
 const router = useRouter();
 
@@ -147,6 +166,15 @@ const postData = ref({
   isActive: false,
 });
 
+const showMessage = ref(false);
+const popupTitle = ref("");
+const popupDescription = ref("");
+
+const username = ref(null);
+const password = ref(null);
+
+const showLogin = ref(true);
+const token = ref(null);
 const currentEditID = ref(null);
 const showNewPost = ref(false);
 const editorInstance = ref(null);
@@ -187,16 +215,39 @@ const writePost = () => {
   } else showNewPost.value = true;
 };
 
+const loginUser = async () => {
+  if (username.value && password.value) {
+    const loginData = { username: username.value, password: password.value };
+    const response = await login(loginData);
+    if (response.status === "success") {
+      Cookies.set("access_token", response.token, {
+        secure: true,
+        sameSite: "Strict",
+      });
+      popupTitle.value = "Zalogowano";
+      popupDescription.value = "Za chwilę zostaniesz przekierowany do strony";
+    } else {
+      popupTitle.value = "Wystąpił problem";
+      popupDescription.value = "login albo hasło są niepoprawne";
+      username.value = "";
+      password.value = "";
+    }
+    showMessage.value = true;
+    setTimeout(() => {
+      showMessage.value = false;
+      showLogin.value = false;
+    }, 3500);
+  }
+};
+
 // Methods for post actions
 const activatePost = async (postID) => {
   try {
     const response = await activateBlogPost(postID);
-    if (response.message === "Post status changed successfully") {
+    if (response.status === "success") {
       posts.getPosts();
-      console.log("Posts reloaded successfully");
-    } else {
-      console.error("Failed to activate post");
     }
+    console.log(response.message);
   } catch (error) {
     console.error("Error activating post:", error);
   }
@@ -204,14 +255,14 @@ const activatePost = async (postID) => {
 
 const updatePost = async (postID) => {
   try {
+    postData.value.code = editorInstance.value.getBody().outerHTML;
     const response = await editBlogPost(currentEditID.value, postData.value);
-    if (response.message === "Post updated successfully") {
+    if (response.status === "success") {
       posts.getPosts();
-      console.log("Posts reloaded successfully");
+
       canclePost();
-    } else {
-      console.error("Failed to update post");
     }
+    console.log(response.message);
   } catch (error) {
     console.error("Error updating post:", error);
   }
@@ -236,13 +287,11 @@ const getPostContent = async () => {
   } else {
     try {
       const response = await postBlogPost(postData.value);
-      if (response.message === "The post was added successfully") {
+      if (response.status === "success") {
         posts.getPosts();
-        console.log("Posts got added successfully");
         canclePost();
-      } else {
-        console.error("Failed to add post");
       }
+      console.log(response.message);
     } catch (error) {
       console.error("Error updating post:", error);
     }
@@ -270,6 +319,14 @@ const editPost = (post) => {
 
 // Lifecycle hooks
 onMounted(() => {
+  token.value = Cookies.get("access_token");
+  if (token.value) {
+    const timeLeft = jwtDecode(token.value).exp;
+    if (timeLeft - Math.floor(Date.now() / 1000) > 0) {
+      showLogin.value = false;
+    }
+  }
+
   if (posts.isLoading) {
     posts.getPosts();
   }
@@ -286,6 +343,55 @@ onMounted(() => {
   justify-content: center;
   min-height: 100vh;
   padding-bottom: 50px;
+}
+
+.login {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  z-index: 2;
+}
+
+.login input {
+  height: 30px;
+  width: 200px;
+  padding-left: 10px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: solid 1px black;
+  outline: none;
+}
+
+.login button {
+  background-color: white;
+  border: solid black 0.5px;
+  border-radius: 25px;
+  color: #2c3e50;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 500;
+  height: 50px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding: 0 15px;
+  text-align: center;
+  transition: all 1s ease;
+}
+
+.login button:hover {
+  background-color: #2c3e50;
+  color: #ffffff;
+  font-size: 18px;
 }
 
 .post-list {
@@ -436,5 +542,36 @@ onMounted(() => {
 
 .post-control-buttons .edit-button {
   height: 35px;
+}
+
+.popup-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 5px;
+  padding: 0 25px 25px 25px;
+  z-index: 4;
+  color: white;
+}
+
+.popupMessage-enter-to,
+.popupMessage-leave-from {
+  opacity: 1;
+  /* transform: translateY(0%); */
+}
+
+.popupMessage-enter-from,
+.popupMessage-leave-to {
+  opacity: 0;
+  /* transform: translateY(-100%); */
+}
+
+.popupMessage-enter-active,
+.popupMessage-leave-active {
+  transition: all 1s ease;
 }
 </style>

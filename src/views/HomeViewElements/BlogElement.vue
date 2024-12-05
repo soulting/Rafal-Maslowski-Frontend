@@ -45,8 +45,8 @@
 import { computed, onMounted, ref } from "vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-import BlogElement from "@/components/BlogElementCarouselItem.vue";
-import BlogElementSceleton from "@/components/BlogElementCarouselItemSceleton.vue";
+import BlogElement from "@/components/BlogElement.vue";
+import BlogElementSceleton from "@/components/BlogElementSceleton.vue";
 
 import { useRoute, useRouter } from "vue-router";
 import { usePosts } from "@/stores/posts";

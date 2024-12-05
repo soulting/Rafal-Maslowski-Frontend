@@ -72,7 +72,7 @@ const validateMessage = () => {
 const sendMessage = async () => {
   if (validateMessage()) {
     const response = await sendMail(message.value);
-    if (response.message === "E-mail wysłany pomyślnie!") {
+    if (response.status === "success") {
       message.value = { name: "", email: "", messageText: "" };
       popupTitle.value = "Wiadomość wysłana pomyślnie";
       popupDescription.value =
