@@ -38,7 +38,7 @@
         <router-link
           @click="changeMenu()"
           class="router-link"
-          to="/contact-information"
+          to="/contactinformation"
           >Kontakt
         </router-link>
       </div>
