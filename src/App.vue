@@ -31,7 +31,9 @@
     </nav>
     <transition name="dropdownmenuExpansion">
       <div v-if="menuOpen" class="dropdown-tabs">
-        <router-link class="router-link" to="/">Strona Główna </router-link>
+        <router-link @click="changeMenu()" class="router-link" to="/"
+          >Strona Główna
+        </router-link>
         <router-link @click="changeMenu()" class="router-link" to="/blog"
           >Blog
         </router-link>
