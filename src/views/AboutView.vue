@@ -8,14 +8,14 @@
 
       <transition name="aboutElement">
         <div v-if="showElement" class="name-container" id="element0">
-          <h1>Rafał Masłowski</h1>
+          <h1>DORADCA FINANSOWY</h1>
         </div></transition
       >
     </div>
     <div class="about-main-section">
       <transition name="aboutElement">
         <div v-if="showElement" class="description-section" id="element1">
-          <h2>Doradca kredytowy</h2>
+          c
           <p>
             Wiedzę i doświadczenie zdobyłem od podszewki, pracując w banku. W
             życiu zawodowym kieruję się przede wszystkim dobrem klienta. Stawiam

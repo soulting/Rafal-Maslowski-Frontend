@@ -11,6 +11,7 @@
         <img class="navbar-img" src="@/assets/RM_logo.svg" alt="icon image" />
       </router-link>
       <div class="tab-container">
+        <router-link class="router-link" to="/">Strona Główna </router-link>
         <router-link class="router-link" to="/blog">Blog </router-link>
         <router-link class="router-link" to="/about">O Mnie </router-link>
         <router-link class="router-link" to="/contactinformation"
@@ -29,6 +30,7 @@
     </nav>
     <transition name="dropdownmenuExpansion">
       <div v-if="menuOpen" class="dropdown-tabs">
+        <router-link class="router-link" to="/">Strona Główna </router-link>
         <router-link @click="changeMenu()" class="router-link" to="/blog"
           >Blog
         </router-link>

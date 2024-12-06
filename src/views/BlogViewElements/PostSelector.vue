@@ -165,6 +165,7 @@ const selectCategory = (category) => {
   border: none;
   background-color: white;
   font-size: 12px;
+  cursor: pointer;
 }
 
 .selector:hover {
@@ -178,7 +179,7 @@ const selectCategory = (category) => {
   }
 
   .selector {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .selector-container {

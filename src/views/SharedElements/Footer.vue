@@ -23,6 +23,14 @@
             >Stanisława Żółkiewskiego 5/5, 87-100 Toruń</a
           >
         </p>
+        <p>
+          Facebook:
+          <a
+            href="https://www.facebook.com/KredytyUbezpieczeniaRafalMaslowski/"
+            target="_blank"
+            >Rafał Masłowski</a
+          >
+        </p>
       </div>
 
       <div class="footer-section navigation">

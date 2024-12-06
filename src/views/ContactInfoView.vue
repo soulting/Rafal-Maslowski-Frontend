@@ -21,7 +21,7 @@
           <p>
             Facebook:
             <a
-              href="https://www.facebook.com/profile.php?id=100003326232034"
+              href="https://www.facebook.com/KredytyUbezpieczeniaRafalMaslowski/"
               target="_blank"
               >Rafał Masłowski</a
             >
@@ -191,7 +191,7 @@ p {
 
 @media (min-width: 768px) {
   .contact-section {
-    align-items: flex-start;
+    /* align-items: flex-start; */
     padding: 0 35px;
   }
 
