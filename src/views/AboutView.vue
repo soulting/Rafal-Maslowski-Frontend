@@ -1,10 +1,21 @@
 <template>
   <section class="about" id="about-element-observe-target">
     <div class="upper-image-container">
-      <img
+      <picture class="contact-background-image">
+        <source
+          srcset="@/assets/backgrounds/big_img_1.jpg"
+          media="(min-width: 1100px)"
+        />
+        <img
+          src="@/assets/backgrounds/small_img_1.jpg"
+          alt="Background image"
+        />
+      </picture>
+
+      <!-- <img
         src="@/assets/backgrounds/kevin-rajaram-ULwzqOnPem0-unsplash.jpg"
         alt="background-image"
-      />
+      /> -->
 
       <transition name="aboutElement">
         <div v-if="showElement" class="name-container" id="element0">

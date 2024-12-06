@@ -1,9 +1,16 @@
 <template>
   <section class="contact-section" id="contact-element-observe-target">
-    <img
+    <picture class="contact-background-image">
+      <source
+        srcset="@/assets/backgrounds/big_img_2.jpg"
+        media="(min-width: 1100px)"
+      />
+      <img src="@/assets/backgrounds/small_img_2.jpg" alt="Background image" />
+    </picture>
+    <!-- <img
       src="@/assets/backgrounds/matthew-henry-VviFtDJakYk-unsplash.jpg"
       alt="background image"
-    />
+    /> -->
 
     <transition name="contactElement">
       <div v-if="showElement" id="element0" class="inner-content-section">
