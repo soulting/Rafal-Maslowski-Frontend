@@ -1,12 +1,13 @@
 <template>
   <main>
     <img
+      v-show="!showLoader"
       class="navbar-img-shadow"
       src="@/assets/RM_logo.svg"
       alt="icon shadow"
       @load="showSection"
     />
-    <nav :style="{ visibility: showLoader ? 'hidden' : 'visible' }">
+    <nav v-show="!showLoader">
       <router-link to="/">
         <img class="navbar-img" src="@/assets/RM_logo.svg" alt="icon image" />
       </router-link>
