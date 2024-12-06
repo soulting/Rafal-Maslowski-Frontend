@@ -31,7 +31,7 @@
         <img
           v-if="showElement"
           id="element2"
-          src="@/assets/backgrounds/428523336_7659326927521439_9053629739761281834_n.jpg"
+          src="@/assets/backgrounds/DSC00434-Poprawione-Szum bez tła mniejszy rozmiar.png"
           alt="profile picture"
       /></transition>
     </div>
