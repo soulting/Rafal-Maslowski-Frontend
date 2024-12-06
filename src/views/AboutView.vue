@@ -15,7 +15,6 @@
     <div class="about-main-section">
       <transition name="aboutElement">
         <div v-if="showElement" class="description-section" id="element1">
-          c
           <p>
             Wiedzę i doświadczenie zdobyłem od podszewki, pracując w banku. W
             życiu zawodowym kieruję się przede wszystkim dobrem klienta. Stawiam
