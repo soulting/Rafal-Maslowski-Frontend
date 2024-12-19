@@ -1,44 +1,46 @@
 <template>
   <section class="contact-section" id="contact-element-observe-target">
-    <picture class="contact-background-image">
-      <source
-        srcset="@/assets/backgrounds/big_img_2.jpg"
-        media="(min-width: 1100px)"
-      />
-      <img src="@/assets/backgrounds/small_img_2.jpg" alt="Background image" />
-    </picture>
-    <!-- <img
-      src="@/assets/backgrounds/matthew-henry-VviFtDJakYk-unsplash.jpg"
+    <img
+      src="@/assets/backgrounds/kevin-rajaram-ULwzqOnPem0-unsplash.jpg"
       alt="background image"
-    /> -->
+    />
 
     <transition name="contactElement">
-      <div v-if="showElement" id="element0" class="inner-content-section">
+      <div
+        v-if="mutables.data && showElement"
+        id="element0"
+        class="inner-content-section"
+      >
         <h2>Kontakt</h2>
         <p>Skontaktuj się ze mną, a odpowiem jak najszybciej.</p>
         <div class="contact-info">
           <h3>Moje dane kontaktowe:</h3>
           <p>
             Email:
-            <a href="mailto:rafal.maslowski@phinance.pl"
-              >rafal.maslowski@phinance.pl</a
+            <a :href="`mailto:${mutables.data.email}`">{{
+              mutables.data.email
+            }}</a>
+          </p>
+          <p>
+            Telefon:
+            <a :href="`tel:${mutables.data.telefon}`"
+              >+{{ mutables.data.telefon }}</a
             >
           </p>
-          <p>Telefon: <a href="tel:+48737327636">+48 737 327 636</a></p>
           <p>
             Facebook:
-            <a
-              href="https://www.facebook.com/KredytyUbezpieczeniaRafalMaslowski/"
-              target="_blank"
+            <a :href="mutables.data.facebook" target="_blank"
               >Rafał Masłowski</a
             >
           </p>
           <p>
             Adres:
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Stanisława+Żółkiewskiego+5/5,+87-100+Toruń"
+              :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                mutables.data.adres
+              )}`"
               target="_blank"
-              >Stanisława Żółkiewskiego 5/5, 87-100 Toruń</a
+              >{{ mutables.data.adres }}</a
             >
           </p>
         </div>
@@ -48,21 +50,23 @@
 
   <div class="separator">
     <transition name="contactElement">
-      <div class="quote-container" v-if="showElement" id="element1">
+      <div
+        class="quote-container"
+        v-if="mutables.data && showElement"
+        id="element1"
+      >
         <p>
-          „Masz pytania lub problemy związane z kredytem? Skontaktuj się ze mną
-          — pomogę Ci przejść przez zawiłości finansowe, znajdę najlepsze
-          rozwiązania i wyjaśnię każdy szczegół. Razem znajdziemy drogę do
-          bezpiecznych decyzji finansowych.”
+          {{ mutables.data.kontakt_cytat }}
         </p>
 
-        <p v-if="showElement" class="autograf">Rafał Masłowski</p>
+        <p v-if="mutables.data" class="autograf">Rafał Masłowski</p>
       </div></transition
     >
   </div>
 
   <Contact />
   <Footer />
+  <Loader v-if="!mutables.data" />
 </template>
 
 <script setup>
@@ -70,6 +74,9 @@ import Contact from "./HomeViewElements/Contact.vue";
 import Loader from "./SharedElements/Loader.vue";
 import Footer from "./SharedElements/Footer.vue";
 import { ref, onMounted } from "vue";
+import { useMutables } from "@/stores/mutables";
+
+const mutables = useMutables();
 
 const showElement = ref(false);
 
@@ -77,6 +84,7 @@ let observer = null;
 
 onMounted(() => {
   window.scroll(0, 0);
+
   observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {

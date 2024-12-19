@@ -19,10 +19,7 @@
     <transition name="quotesTransition">
       <div v-show="showQuotes" class="quotes-container">
         <p class="quote">
-          Szukasz nieruchomości, potrzebujesz finansowania i ubezpieczenia?
-          Trafiłeś w odpowiednie miejsce. Oszczędź swój czas i pieniądze,
-          skorzystaj z porad doświadczonego Eksperta. Zapraszam serdecznie do
-          współpracy.
+          {{ props.quote }}
         </p>
         <p class="quote signature">Rafał Masłowski</p>
       </div>
@@ -34,6 +31,13 @@
 import { onMounted, ref } from "vue";
 
 const emit = defineEmits(["videoHomeLoaded"]);
+
+const props = defineProps({
+  quote: {
+    type: String,
+    required: true,
+  },
+});
 
 const showQuotes = ref(false);
 const videoElamentHome = ref(null);

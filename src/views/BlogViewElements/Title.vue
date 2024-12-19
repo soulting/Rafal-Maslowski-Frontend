@@ -20,8 +20,8 @@
 
       <transition name="title">
         <div v-if="showTitle" class="blog-view-title-container">
-          <h1>Mowa o pieniądzach</h1>
-          <h2>Blog o tematyce finansowej</h2>
+          <h1>{{ mutables.blog_tytul }}</h1>
+          <h2>{{ mutables.blog_podtytul }}</h2>
         </div>
       </transition>
     </div>
@@ -34,6 +34,8 @@ import { onMounted, ref } from "vue";
 const showTitle = ref(false);
 const videoElament = ref(null);
 const showSection = ref(false);
+
+const props = defineProps({ mutables: Object });
 
 const emit = defineEmits(["videoLoaded"]);
 

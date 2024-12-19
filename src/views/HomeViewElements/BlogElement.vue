@@ -25,11 +25,7 @@
         :key="index"
         class="carousel-posts-container"
       >
-        <BlogElement
-          class="abc"
-          v-if="filteredPosts"
-          :post="filteredPosts[index]"
-        />
+        <BlogElement v-if="filteredPosts" :post="filteredPosts[index]" />
         <BlogElementSceleton v-else />
       </slide>
     </carousel>
@@ -51,14 +47,19 @@ import BlogElementSceleton from "@/components/BlogElementSceleton.vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePosts } from "@/stores/posts";
 
-const posts = usePosts();
+const props = defineProps({
+  posts: {
+    type: Object,
+    required: true,
+  },
+});
 
 const filteredPosts = computed(() => {
   const computedPostList = [];
-  if (posts.posts) {
-    for (let i = 0; i < posts.posts.length; i++) {
-      if (posts.posts[i].isActiv === "TRUE") {
-        computedPostList.push(posts.posts[i]);
+  if (props.posts.data) {
+    for (let i = 0; i < props.posts.data.length; i++) {
+      if (props.posts.data[i].isActiv === "TRUE") {
+        computedPostList.push(props.posts.data[i]);
       }
     }
     return computedPostList;
@@ -74,8 +75,6 @@ const goToBlog = () => {
 };
 
 onMounted(() => {
-  posts.getPosts();
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {

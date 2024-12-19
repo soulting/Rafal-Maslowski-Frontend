@@ -2,7 +2,7 @@ export const sendMail = async (mailData) => {
   let errorResponse;
   try {
     const response = await fetch(
-      "https://rafal-maslowski-backend-4.onrender.com/sendMail",
+      "https://rafal-maslowski-backend-f60x.onrender.com/sendMail",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

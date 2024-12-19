@@ -51,12 +51,15 @@
 
     <router-view />
   </main>
-  <Loader class="home-view-loader" :isVisible="showLoader" />
 </template>
 
 <script setup>
-import Loader from "@/views/SharedElements/Loader.vue";
 import { onMounted, ref } from "vue";
+import { usePosts } from "@/stores/posts";
+import { useMutables } from "@/stores/mutables";
+
+const posts = usePosts();
+const mutables = useMutables();
 
 const menuOpen = ref(false);
 
@@ -69,6 +72,18 @@ const showSection = () => {
 const changeMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
+
+onMounted(() => {
+  window.scrollTo(0, 0);
+
+  if (!posts.data) {
+    posts.getPosts();
+  }
+
+  if (!mutables.data) {
+    mutables.getMutables();
+  }
+});
 </script>
 
 <style>

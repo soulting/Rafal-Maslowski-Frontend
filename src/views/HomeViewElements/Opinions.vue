@@ -33,21 +33,25 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
 
+const props = defineProps({
+  opinions: {
+    type: Object,
+    required: true,
+  },
+});
+
 const opinions = ref([
   {
-    author: "Anna Kowalska",
-    review:
-      "Pan Rafał Masłowski pomógł mi uzyskać kredyt na mieszkanie w szybki i bezproblemowy sposób. Jego wiedza i profesjonalizm zrobiły na mnie duże wrażenie",
+    author: props.opinions.opinia1_autor,
+    review: props.opinions.opinia1,
   },
   {
-    author: "Piotr Nowak",
-    review:
-      "Dzięki panu Rafałowi udało mi się wybrać najkorzystniejszą ofertę kredytową. Jestem bardzo zadowolony z jego indywidualnego podejścia i cierpliwości",
+    author: props.opinions.opinia2_autor,
+    review: props.opinions.opinia2,
   },
   {
-    author: "Magdalena Wiśniewska",
-    review:
-      "Pan Rafał to doradca, który naprawdę dba o klienta. Jego porady były konkretne i rzeczowe, a cały proces przebiegł szybko i bez komplikacji",
+    author: props.opinions.opinia3_autor,
+    review: props.opinions.opinia3,
   },
 ]);
 

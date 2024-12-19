@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!posts.isLoading" class="posts-small-view">
+    <div class="posts-small-view">
       <div
         v-for="(item, index) in filteredPosts"
         :key="index"
@@ -33,21 +33,22 @@
 </template>
 
 <script setup>
-import { usePosts } from "@/stores/posts";
 import { computed, onMounted } from "vue";
 import BlogElement from "@/components/BlogElement.vue";
 
 const props = defineProps({
   category: String,
+  posts: Object,
 });
 
-const posts = usePosts();
-
 const filteredPosts = computed(() => {
+  const activePosts = props.posts.data.filter(
+    (element) => element.isActiv === "TRUE"
+  );
   if (props.category === "WSZYSTKIE WPISY") {
-    return posts.posts;
+    return activePosts;
   } else {
-    return posts.posts.filter((element) => element.category === props.category);
+    return activePosts.filter((element) => element.category === props.category);
   }
 });
 
@@ -61,12 +62,6 @@ const oodPosts = computed(() => {
   if (filteredPosts.value) {
     return filteredPosts.value.filter((element, index) => index % 2 !== 0);
   } else return null;
-});
-
-onMounted(() => {
-  if (posts.isLoading) {
-    posts.getPosts();
-  }
 });
 </script>
 

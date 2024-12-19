@@ -1,61 +1,56 @@
 <template>
   <section class="about" id="about-element-observe-target">
     <div class="upper-image-container">
-      <picture class="contact-background-image">
-        <source
-          srcset="@/assets/backgrounds/big_img_1.jpg"
-          media="(min-width: 1100px)"
-        />
-        <img
-          src="@/assets/backgrounds/small_img_1.jpg"
-          alt="Background image"
-        />
-      </picture>
-
-      <!-- <img
-        src="@/assets/backgrounds/kevin-rajaram-ULwzqOnPem0-unsplash.jpg"
+      <img
+        src="@/assets/backgrounds/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg"
         alt="background-image"
-      /> -->
+      />
 
       <transition name="aboutElement">
-        <div v-if="showElement" class="name-container" id="element0">
-          <h1>DORADCA FINANSOWY</h1>
+        <div
+          v-if="mutables.data && showElement"
+          class="name-container"
+          id="element0"
+        >
+          <h1>{{ mutables.data.o_mnie_tytul }}</h1>
         </div></transition
       >
     </div>
     <div class="about-main-section">
       <transition name="aboutElement">
-        <div v-if="showElement" class="description-section" id="element1">
-          <p>
-            Wiedzę i doświadczenie zdobyłem od podszewki, pracując w banku. W
-            życiu zawodowym kieruję się przede wszystkim dobrem klienta. Stawiam
-            na indywidualne podejście, co w moim przekonaniu jest kluczem do
-            skutecznego prowadzenia całego procesu kredytowego. Dzielę się swoją
-            wiedzą, staram się też przybliżyć dobre praktyki eksperta
-            kredytowego.
-          </p>
+        <div
+          v-if="mutables.data && showElement"
+          class="description-section"
+          id="element1"
+        >
+          <p>{{ mutables.data.o_mnie_cytat }}</p>
           <button @click="goTo">Skontaktuj się</button>
         </div>
       </transition>
       <transition name="aboutElement">
         <img
-          v-if="showElement"
+          v-if="mutables.data && showElement"
           id="element2"
-          src="@/assets/backgrounds/DSC00434-Poprawione-Szum bez tła mniejszy rozmiar.png"
+          :src="mutables.data.o_mnie_obraz"
           alt="profile picture"
       /></transition>
     </div>
   </section>
   <Contact /><Footer />
+  <Loader v-if="!mutables.data" />
 </template>
 
 <script setup>
 import Footer from "./SharedElements/Footer.vue";
 import Contact from "@/views/HomeViewElements/Contact.vue";
+import Loader from "./SharedElements/Loader.vue";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useMutables } from "@/stores/mutables";
 
 const router = useRouter();
+
+const mutables = useMutables();
 
 const showElement = ref(false);
 let observer = null;
@@ -66,6 +61,10 @@ const goTo = () => {
 
 onMounted(() => {
   window.scroll(0, 0);
+
+  if (!mutables.data) {
+    mutables.getMutables();
+  }
   observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -170,15 +169,12 @@ onMounted(() => {
   font-size: 18px;
 }
 
-#element0.aboutElement-enter-active {
-  transition-delay: 0.25s;
-}
 #element1.aboutElement-enter-active {
-  transition-delay: 0.75s;
+  transition-delay: 0.25s;
 }
 
 #element2.aboutElement-enter-active {
-  transition-delay: 1.25s;
+  transition-delay: 0.75s;
 }
 
 .aboutElement-enter-from,

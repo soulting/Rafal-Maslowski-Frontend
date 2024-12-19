@@ -3,16 +3,18 @@ import { getBlogPosts } from "@/composables/getBlogPosts";
 
 export const usePosts = defineStore("posts", {
   state: () => {
-    return { isLoading: true, posts: null };
+    return { data: null };
   },
   actions: {
     async getPosts() {
-      const posts = await getBlogPosts();
-      console.log(posts);
-      if (posts.status === "success") {
-        this.posts = posts.data;
+      try {
+        const posts = await getBlogPosts();
+        if (posts.status === "success") {
+          this.data = posts.data;
+        }
+      } catch (error) {
+        console.error("An error occured fetching posts");
       }
-      this.isLoading = false;
     },
   },
 });

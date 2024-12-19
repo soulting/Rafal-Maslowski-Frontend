@@ -2,7 +2,7 @@
   <section class="contact" id="contact-element-observe-target">
     <img
       class="contact-background-image"
-      src="@/assets/backgrounds/big_img_3.jpg"
+      src="@/assets/backgrounds/matthew-henry-VviFtDJakYk-unsplash.jpg"
       alt="contact background image"
       id="parallax"
     />

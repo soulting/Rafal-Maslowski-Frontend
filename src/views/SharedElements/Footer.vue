@@ -1,35 +1,34 @@
 <template>
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-section contact-info">
+      <div v-if="mutables.data" class="footer-section contact-info">
         <h3>Kontakt</h3>
         <p>
           Email:
-          <a class="info-link" href="mailto:rafal.maslowski@phinance.pl"
-            >rafal.maslowski@phinance.pl</a
-          >
+          <a :href="`mailto:${mutables.data.email}`">{{
+            mutables.data.email
+          }}</a>
         </p>
         <p>
           Telefon:
-          <a class="info-link" href="tel:+48737327636">+48 737 327 636</a>
+          <a :href="`tel:${mutables.data.telefon}`"
+            >+{{ mutables.data.telefon }}</a
+          >
         </p>
 
         <p>
           Adres:
           <a
-            class="info-link"
-            href="https://www.google.com/maps/search/?api=1&query=Stanisława+Żółkiewskiego+5/5,+87-100+Toruń"
+            :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              mutables.data.adres
+            )}`"
             target="_blank"
-            >Stanisława Żółkiewskiego 5/5, 87-100 Toruń</a
+            >{{ mutables.data.adres }}</a
           >
         </p>
         <p>
           Facebook:
-          <a
-            href="https://www.facebook.com/KredytyUbezpieczeniaRafalMaslowski/"
-            target="_blank"
-            >Rafał Masłowski</a
-          >
+          <a :href="mutables.data.facebook" target="_blank">Rafał Masłowski</a>
         </p>
       </div>
 
@@ -55,6 +54,10 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { useMutables } from "@/stores/mutables";
+import { ref, onMounted } from "vue";
+
+const mutables = useMutables();
 
 const router = useRouter();
 
@@ -139,6 +142,15 @@ const goTo = (informationSite) => {
   color: #a0a0a0;
   border-top: 1px solid #333;
   padding-top: 15px;
+}
+a {
+  text-decoration: none;
+  color: #f4f4f4;
+}
+
+a:hover {
+  cursor: pointer;
+  color: #007bff;
 }
 
 @media (min-width: 500px) {

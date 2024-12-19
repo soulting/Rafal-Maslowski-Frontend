@@ -5,7 +5,7 @@ export const editBlogPost = async (postID, blogPost) => {
   try {
     const token = Cookies.get("access_token");
     const response = await fetch(
-      `http://127.0.0.1:5000/editBlogPost?id=${postID}`,
+      `https://rafal-maslowski-backend-f60x.onrender.com/editBlogPost?id=${postID}`,
       {
         method: "PUT",
         headers: {

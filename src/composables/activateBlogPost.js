@@ -4,7 +4,7 @@ export const activateBlogPost = async (postID) => {
   try {
     const token = Cookies.get("access_token");
     const response = await fetch(
-      `http://127.0.0.1:5000/activateBlogPost?id=${postID}`,
+      `https://rafal-maslowski-backend-f60x.onrender.com/activateBlogPost?id=${postID}`,
       {
         method: "PUT",
         headers: {

@@ -1,5 +1,5 @@
 <template>
-  <section class="post-view-post-container-loader" v-if="isVisible">
+  <section class="post-view-post-container-loader">
     <img src="@/assets/RM_logo.png" alt="Loading..." class="loading-image" />
 
     <div class="dot-container">
@@ -10,14 +10,7 @@
   </section>
 </template>
 
-<script setup>
-const props = defineProps({
-  isVisible: {
-    type: Boolean,
-    default: false,
-  },
-});
-</script>
+<script setup></script>
 
 <style scoped>
 .loading-image {

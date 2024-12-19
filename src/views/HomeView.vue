@@ -1,12 +1,16 @@
 <template>
   <main class="home-view">
-    <Quote @videoHomeLoaded="showSection" />
-    <BlogElement />
+    <Quote
+      v-if="mutables.data"
+      :quote="mutables.data.strona_glowna_cytat"
+      @videoHomeLoaded="showSection"
+    />
+    <BlogElement v-if="posts.data" :posts="posts" />
     <WhyMe />
-    <Options />
+    <Opinions v-if="mutables.data" :opinions="mutables.data" />
     <Banks />
     <Contact />
-    <Loader :isVisible="showLoader" />
+    <Loader v-if="!posts.data || !mutables.data || showLoader" />
     <Footer />
   </main>
 </template>
@@ -16,13 +20,18 @@ import BlogElement from "./HomeViewElements/BlogElement.vue";
 import Quote from "./HomeViewElements/Quote.vue";
 import WhyMe from "./HomeViewElements/WhyMe.vue";
 import Banks from "./HomeViewElements/Banks.vue";
-import Options from "./HomeViewElements/Opinions.vue";
+import Opinions from "./HomeViewElements/Opinions.vue";
 import Contact from "./HomeViewElements/Contact.vue";
 import Loader from "./SharedElements/Loader.vue";
 import Footer from "./SharedElements/Footer.vue";
 import { onMounted, onUnmounted, ref } from "vue";
+import { usePosts } from "@/stores/posts";
+import { useMutables } from "@/stores/mutables";
 
 const showLoader = ref(true);
+
+const posts = usePosts();
+const mutables = useMutables();
 
 const showSection = () => {
   showLoader.value = false;

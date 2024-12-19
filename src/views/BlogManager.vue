@@ -15,8 +15,181 @@
   </transition>
 
   <div class="blog-manager">
-    <div v-if="!posts.isLoading" class="post-list">
-      <div v-for="(post, index) in posts.posts" :key="index" class="post-item">
+    <div
+      class="blog-manager-buttons"
+      :class="{ 'mutables-sellected': showMutables }"
+    >
+      <button @click="changeView">posty</button>
+      <div class="blog-manager-button-selector">
+        <img
+          v-if="showMutables"
+          class="mutables-shown"
+          src="@/assets/icons/dot.png"
+          alt="dot icon"
+        />
+
+        <img
+          v-if="showPosts"
+          class="posts-shown"
+          src="@/assets/icons/dot.png"
+          alt="dot icon"
+        />
+      </div>
+      <button @click="changeView">zmienne</button>
+    </div>
+
+    <div v-if="mutables.data && showMutables" class="mutables-container">
+      <h2>STRONA GŁÓWNA</h2>
+      <label for="strona_glowna_cytat">Cytat na stronę główną:</label>
+      <textarea
+        v-model="mutables.data.strona_glowna_cytat"
+        id="strona_glowna_cytat"
+        name="strona_glowna_cytat"
+        rows="4"
+      ></textarea>
+      <label for="opinia1">Opinia 1:</label>
+      <textarea
+        id="opinia1"
+        name="opinia1"
+        rows="2"
+        v-model="mutables.data.opinia1"
+      ></textarea>
+
+      <label for="opinia1_autor">Autor opinii 1:</label>
+      <input
+        type="text"
+        id="opinia1_autor"
+        name="opinia1_autor"
+        v-model="mutables.data.opinia1_autor"
+      />
+
+      <label for="opinia2">Opinia 2:</label>
+      <textarea
+        v-model="mutables.data.opinia2"
+        id="opinia2"
+        name="opinia2"
+        rows="2"
+      ></textarea>
+
+      <label for="opinia2_autor">Autor opinii 2:</label>
+      <input
+        v-model="mutables.data.opinia2_autor"
+        type="text"
+        id="opinia2_autor"
+        name="opinia2_autor"
+      />
+
+      <label for="opinia3">Opinia 3:</label>
+      <textarea
+        v-model="mutables.data.opinia3"
+        id="opinia3"
+        name="opinia3"
+        rows="2"
+      ></textarea>
+
+      <label for="opinia3_autor">Autor opinii 3:</label>
+      <input
+        v-model="mutables.data.opinia3_autor"
+        type="text"
+        id="opinia3_autor"
+        name="opinia3_autor"
+      />
+      <button @click="submitChanges" type="submit">ZAPISZ</button>
+
+      <h2>BLOG</h2>
+
+      <label for="blog_tytul">Tytuł bloga:</label>
+      <input
+        v-model="mutables.data.blog_tytul"
+        type="text"
+        id="blog_tytul"
+        name="blog_tytul"
+      />
+
+      <label for="blog_podtytul">Podtytuł bloga:</label>
+      <input
+        v-model="mutables.data.blog_podtytul"
+        type="text"
+        id="blog_podtytul"
+        name="blog_podtytul"
+      />
+      <button @click="submitChanges" type="submit">ZAPISZ</button>
+
+      <h2>O MNIE</h2>
+
+      <label for="o_mnie_tytul">Tytuł o mnie:</label>
+      <input
+        v-model="mutables.data.o_mnie_tytul"
+        type="text"
+        id="o_mnie_tytul"
+        name="o_mnie_tytul"
+      />
+      <label for="o_mnie_cytat">Cytat o mnie:</label>
+      <textarea
+        v-model="mutables.data.o_mnie_cytat"
+        id="o_mnie_cytat"
+        name="o_mnie_cytat"
+        rows="4"
+      ></textarea>
+
+      <label for="o_mnie_obraz">zdjęcie o mnie:</label>
+      <img :src="mutables.data.o_mnie_obraz" alt="moje zdjeciec" />
+
+      <label for="adres">adres zdjęcia o mnie</label>
+      <input
+        v-model="mutables.data.o_mnie_obraz"
+        type="text"
+        id="adres"
+        name="adres"
+      />
+      <button @click="submitChanges" type="submit">ZAPISZ</button>
+
+      <h2>KONTAKT</h2>
+
+      <label for="adres">Adres:</label>
+      <input
+        v-model="mutables.data.adres"
+        type="text"
+        id="adres"
+        name="adres"
+      />
+
+      <label for="email">Email:</label>
+      <input
+        v-model="mutables.data.email"
+        type="email"
+        id="email"
+        name="email"
+      />
+
+      <label for="facebook">Facebook:</label>
+      <input
+        v-model="mutables.data.facebook"
+        type="url"
+        id="facebook"
+        name="facebook"
+      />
+
+      <label for="telefon">Telefon:</label>
+      <input
+        v-model="mutables.data.telefon"
+        type="tel"
+        id="telefon"
+        name="telefon"
+      />
+
+      <label for="kontakt_cytat">Cytat kontaktowy:</label>
+      <textarea
+        v-model="mutables.data.kontakt_cytat"
+        id="kontakt_cytat"
+        name="kontakt_cytat"
+        rows="4"
+      ></textarea>
+
+      <button @click="submitChanges" type="submit">ZAPISZ</button>
+    </div>
+    <div v-if="posts.data && showPosts" class="post-list">
+      <div v-for="(post, index) in posts.data" :key="index" class="post-item">
         <img class="post-image" :src="post.image" alt="post image" />
         <div class="post-body">
           <h4 class="post-title">{{ post.title }}</h4>
@@ -52,25 +225,9 @@
         </div>
       </div>
     </div>
-    <div v-else class="post-list">
-      <div
-        v-for="(post, index) in 3"
-        :key="index"
-        id="placeholder"
-        class="post-item"
-      >
-        <img
-          class="post-image"
-          src="@/assets/backgrounds/placeholder-image.png"
-          alt="post image"
-        />
-        <div class="post-body">
-          <div class="post-title"></div>
-          <div class="post-description"></div>
-        </div>
-      </div>
-    </div>
-    <button @click="writePost" class="write-post">NAPISZ POST</button>
+    <button v-show="showPosts" @click="writePost" class="write-post">
+      NAPISZ POST
+    </button>
     <div v-show="showNewPost" class="new-post-container">
       <input
         v-model="postData.title"
@@ -111,7 +268,7 @@
       <div id="sample">
         <Editor
           @init="onEditorInit"
-          api-key="vub20t3qw4otb7xs5d814g23718qwwfa3e25b1kigbl57qcl"
+          api-key="k0efnljtvefg89se78os1oopj0hhvfyohqfko19nnrqo5x7j"
           :init="{
             toolbar_mode: 'sliding',
             plugins:
@@ -148,12 +305,22 @@ import { postBlogPost } from "@/composables/postBlogPost.js";
 import { activateBlogPost } from "@/composables/activateBlogPost.js";
 import { editBlogPost } from "@/composables/editBlogPost.js";
 import { usePosts } from "@/stores/posts";
+import { useMutables } from "@/stores/mutables";
 import Cookies from "js-cookie";
 import { login } from "@/composables/login.js";
+import { postMutables } from "@/composables/postMutables.js";
 
 import { jwtDecode } from "jwt-decode";
 
 const router = useRouter();
+
+const showPosts = ref(true);
+const showMutables = ref(false);
+
+const changeView = () => {
+  showPosts.value = !showPosts.value;
+  showMutables.value = !showMutables.value;
+};
 
 // Reactive references
 const posts = usePosts();
@@ -165,6 +332,8 @@ const postData = ref({
   category: null,
   isActive: false,
 });
+
+const mutables = useMutables();
 
 const showMessage = ref(false);
 const popupTitle = ref("");
@@ -178,6 +347,21 @@ const token = ref(null);
 const currentEditID = ref(null);
 const showNewPost = ref(false);
 const editorInstance = ref(null);
+
+const submitChanges = async () => {
+  const response = await postMutables(mutables.data);
+  if (response.status === "success") {
+    popupTitle.value = "Powodzenie";
+    popupDescription.value = "Twoje zmienne zostały pomyślnie zmienione";
+  } else {
+    popupTitle.value = "Wystąpił problem";
+    popupDescription.value = "Nie udało się zmienić danych";
+  }
+  showMessage.value = true;
+  setTimeout(() => {
+    showMessage.value = false;
+  }, 2500);
+};
 
 const goTo = (postId) => {
   router.push({ name: "post", query: { id: postId } });
@@ -235,8 +419,10 @@ const loginUser = async () => {
     showMessage.value = true;
     setTimeout(() => {
       showMessage.value = false;
-      showLogin.value = false;
-    }, 3500);
+      if (response.status === "success") {
+        showLogin.value = false;
+      }
+    }, 2500);
   }
 };
 
@@ -326,10 +512,6 @@ onMounted(() => {
       showLogin.value = false;
     }
   }
-
-  if (posts.isLoading) {
-    posts.getPosts();
-  }
 });
 </script>
 
@@ -343,6 +525,96 @@ onMounted(() => {
   justify-content: center;
   min-height: 100vh;
   padding-bottom: 50px;
+}
+
+.blog-manager-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 25px 15px;
+}
+
+.blog-manager-buttons button,
+.mutables-container button {
+  background-color: white;
+  border: solid black 0.5px;
+  border-radius: 25px;
+  color: #2c3e50;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-weight: 500;
+  height: 50px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding: 0 15px;
+  text-align: center;
+  transition: all 1s ease;
+}
+
+.blog-manager-buttons button:hover,
+.mutables-container button:hover {
+  background-color: #2c3e50;
+  color: #ffffff;
+}
+
+.blog-manager-button-selector {
+  border: none;
+  height: 50px;
+  width: 75px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding: 0;
+  transition: all 1s ease;
+  display: flex;
+  align-items: center;
+}
+
+.mutables-shown {
+  margin-left: auto;
+}
+
+.posts-shown {
+  margin-right: auto;
+}
+
+.blog-manager-button-selector img {
+  height: 50px;
+}
+
+.mutables-container {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+.mutables-container label {
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-right: auto;
+}
+
+.mutables-container img {
+  width: 50%;
+}
+
+.mutables-container textarea {
+  height: 150px;
+  padding: 7px;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  border-radius: 5px;
+  border: solid black 0.5px;
+}
+
+.mutables-container input {
+  height: 40px;
+  padding: 0 7px;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 15px;
+  border-radius: 5px;
+  border: solid black 0.5px;
 }
 
 .login {

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e8b818f8-503f-4d24-9d04-98d5ab991c41" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/assets/backgrounds/big_img_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/backgrounds/big_img_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/backgrounds/big_img_3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/backgrounds/small_img_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/backgrounds/small_img_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/backgrounds/small_img_3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AboutView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AboutView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/BlogManager.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/BlogManager.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/ContactInfoView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ContactInfoView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/HomeViewElements/Contact.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomeViewElements/Contact.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2qJMWmTWM3YggyiemVYUHK01EUU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/andrzej/01_Programing/rafal_maslowski_backend/backend_rafal_maslowski"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e8b818f8-503f-4d24-9d04-98d5ab991c41" name="Changes" comment="" />
+      <created>1734376258343</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734376258343</updated>
+    </task>
+    <servers />
+  </component>
+</project>

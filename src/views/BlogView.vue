@@ -1,9 +1,13 @@
 <template>
-  <Title @videoLoaded="videoIsLoaded = true" />
+  <Title
+    v-if="mutables.data"
+    :mutables="mutables.data"
+    @videoLoaded="videoIsLoaded = true"
+  />
   <Selectors @changeCategory="changeCategory" />
-  <Posts :category="category" />
+  <Posts v-if="posts.data" :posts="posts" :category="category" />
   <Contact />
-  <Loader :isVisible="showLoader" />
+  <Loader v-if="!posts.data || !mutables.data || !videoIsLoaded" />
   <Footer />
 </template>
 
@@ -16,16 +20,13 @@ import Loader from "./SharedElements/Loader.vue";
 import Footer from "./SharedElements/Footer.vue";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { usePosts } from "@/stores/posts";
+import { useMutables } from "@/stores/mutables";
 
 const posts = usePosts();
+const mutables = useMutables();
 
 const category = ref("WSZYSTKIE WPISY");
 
-const showLoader = computed(() => {
-  if (!posts.isLoading && videoIsLoaded.value) {
-    return false;
-  } else return true;
-});
 const videoIsLoaded = ref(false);
 
 const changeCategory = (item) => {
