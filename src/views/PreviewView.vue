@@ -11,7 +11,6 @@ const content = ref("");
 
 onMounted(() => {
   content.value = sessionStorage.getItem("content");
-  console.log(content);
 });
 </script>
 

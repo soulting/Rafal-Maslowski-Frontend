@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!posts.isLoading && blogPost" class="post-view-post-container">
+  <section v-if="blogPost" class="post-view-post-container">
     <h1 class="title-section">{{ blogPost.title }}</h1>
     <p class="publication-date">
       Opublikowano
@@ -10,40 +10,29 @@
     <div class="body-section" v-html="blogPost.code"></div>
     <hr />
   </section>
-  <section class="post-view-post-container-loader" v-else>
-    <img src="@/assets/RM_logo.png" alt="Loading..." class="loading-image" />
-
-    <div class="dot-container">
-      <img class="dot" id="first" src="@/assets/icons/dot.png" alt="dot" />
-      <img class="dot" id="second" src="@/assets/icons/dot.png" alt="dot" />
-      <img class="dot" id="third" src="@/assets/icons/dot.png" alt="dot" />
-    </div>
-  </section>
-  <Contact v-if="!posts.isLoading && blogPost" />
+  <Loader v-if="!blogPost" />
+  <Contact v-if="blogPost" />
 </template>
 
 <script setup>
 import { getBlogPost } from "@/composables/getBlogPost";
 import router from "@/router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import Contact from "@/views/HomeViewElements/Contact.vue";
 import { usePosts } from "@/stores/posts";
+import Loader from "./SharedElements/Loader.vue";
 
 const route = useRoute();
 const posts = usePosts();
 
-const blogPost = ref(null);
+const blogPost = computed(() => {
+  if (posts.data) {
+    return posts.data.find((item) => item.id === Number(route.query.id));
+  } else return null;
+});
 
 onMounted(async () => {
-  if (posts.isLoading) {
-    await posts.getPosts();
-  }
-
-  blogPost.value = await posts.posts.find(
-    (item) => item.id === Number(route.query.id)
-  );
-
   window.scrollTo(0, 0);
 });
 </script>
