@@ -2,8 +2,7 @@ export const getBlogPost = async (blogPost) => {
   let errorResponse;
   try {
     const response = await fetch(
-      // `https://rafal-maslowski-backend-f60x.onrender.com/getBlogPost?id=${blogPost.value.id}`,
-      `http://127.0.0.1:5000/getBlogPost?id=${blogPost.value.id}`,
+      `https://rafal-maslowski-backend-f60x.onrender.com/getBlogPost?id=${blogPost.value.id}`,
       {
         method: "GET",
       }
