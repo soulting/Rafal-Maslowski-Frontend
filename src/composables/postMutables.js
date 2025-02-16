@@ -4,7 +4,9 @@ export const postMutables = async (mutablesData) => {
   try {
     const token = Cookies.get("access_token");
     const response = await fetch(
-      "https://rafal-maslowski-backend-f60x.onrender.com/editMutables",
+      // "https://rafal-maslowski-backend-f60x.onrender.com/editMutablesTest",
+      "http://127.0.0.1:5000/editMutablesTest",
+
       {
         method: "POST",
         headers: {

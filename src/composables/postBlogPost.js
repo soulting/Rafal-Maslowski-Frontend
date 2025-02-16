@@ -4,7 +4,8 @@ export const postBlogPost = async (postData) => {
   try {
     const token = Cookies.get("access_token");
     const response = await fetch(
-      "https://rafal-maslowski-backend-f60x.onrender.com/postBlogPost",
+      // "https://rafal-maslowski-backend-f60x.onrender.com/postBlogPostTest",
+      `http://127.0.0.1:5000/postBlogPostTest`,
       {
         method: "POST",
         headers: {
